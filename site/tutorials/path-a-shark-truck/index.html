@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Build Path A: 3D Shark-Truck Island | KidClient Tutorial &amp; Video</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #38bdf8;
+      --yellow: #facc15;
+      --green: #22c55e;
+      --pink: #ec4899;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0%, #0f172a 75%);
+      color: var(--text); line-height: 1.65;
+    }
+    .container { max-width: 980px; margin: 0 auto; padding: 24px; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px; padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; font-weight: 900; font-size: 22px; }
+    .brand img { height: 48px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 999px; font-weight: 800;
+      text-decoration: none; font-size: 16px; cursor: pointer; border: none;
+    }
+    .btn-play { background: var(--green); color: #052e16; }
+    .btn-back { background: rgba(255,255,255,0.1); color: #fff; }
+    .hero-banner {
+      margin: 28px 0; border-radius: 28px; overflow: hidden;
+      border: 3px solid rgba(56, 189, 248, 0.45);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      background: var(--card);
+    }
+    .hero-banner img { width: 100%; max-height: 340px; object-fit: cover; display: block; }
+    .hero-body { padding: 28px; }
+    .badge {
+      display: inline-block; background: rgba(250, 204, 21, 0.15); color: var(--yellow);
+      border: 1px solid rgba(250, 204, 21, 0.4); padding: 4px 14px; border-radius: 999px;
+      font-weight: 800; font-size: 13px; text-transform: uppercase;
+    }
+    h1 { margin: 10px 0 12px; font-size: clamp(28px, 4vw, 42px); line-height: 1.15; }
+    .video-box {
+      background: #020617; border-radius: 24px; padding: 20px;
+      border: 2px solid rgba(56, 189, 248, 0.4); margin: 32px 0;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+    }
+    .video-box video {
+      width: 100%; border-radius: 16px; display: block; background: #000;
+    }
+    .step-card {
+      background: var(--card); border-radius: 22px; padding: 26px;
+      margin-bottom: 24px; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .step-card h2 { margin-top: 0; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+    pre {
+      background: #090d16; color: #e2e8f0; padding: 18px; border-radius: 14px;
+      overflow-x: auto; font-size: 14px; border: 1px solid rgba(56, 189, 248, 0.3);
+      white-space: pre-wrap;
+    }
+    .copy-btn {
+      background: var(--accent); color: #0f172a; padding: 8px 16px;
+      border-radius: 10px; font-weight: 800; cursor: pointer; border: none;
+      margin-bottom: 10px;
+    }
+    .teach-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;
+    }
+    .teach-item {
+      background: rgba(15, 23, 42, 0.7); padding: 18px; border-radius: 16px;
+      border-left: 4px solid var(--yellow);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/" class="brand">
+        <img src="/logo.svg" alt="KidClient" />
+      </a>
+      <div style="display:flex; gap:12px;">
+        <a href="/" class="btn btn-back">⬅️ Back to Arcade</a>
+        <a href="/templates/3d-threejs/index.html" class="btn btn-play">▶️ Play Shark-Truck Island</a>
+      </div>
+    </header>
+
+    <div class="hero-banner">
+      <img src="/assets/brand/kidclient-banner.png" alt="KidClient Arcade Banner" />
+      <div class="hero-body">
+        <span class="badge">Episode 01 • Complete Parent &amp; Kid Tutorial</span>
+        <h1>How to Build "Path A: 3D Shark-Truck Island" With Your 4-Year-Old</h1>
+        <p style="color:var(--muted); font-size:18px; margin:0;">
+          Watch the walkthrough video below, copy our exact 4-year-old Client Brief &amp; System Prompt, and build your own custom 3D monster-truck island in under 10 minutes for $0.
+        </p>
+      </div>
+    </div>
+
+    <div class="video-box">
+      <h2 style="margin:0 0 12px; font-size:22px;">🎬 Video Walkthrough: Building Path A (3D Shark-Truck Island)</h2>
+      <video controls preload="metadata" poster="/assets/brand/kidclient-banner.png">
+        <source src="/assets/videos/path-a-shark-truck-tutorial.mp4" type="video/mp4" />
+        Your browser does not support HTML5 video.
+      </video>
+      <p style="color:var(--muted); font-size:14px; margin:10px 0 0;">
+        💡 <strong>Tip for Parents:</strong> Watch this 60-second overview with your child first so they can see how the Dino Client Boss turns ideas into a real 3D game!
+      </p>
+    </div>
+
+    <div class="step-card">
+      <h2>Step 1: Run the 5-Minute "Client Discovery Call"</h2>
+      <p>Sit down with your child and ask them the 4 KidClient questions. Here is the exact brief our 4-year-old dictated for Shark-Truck Island:</p>
+      <button class="copy-btn" onclick="copyText('brief-code', this)">📋 Copy Client Brief</button>
+      <pre id="brief-code"># CLIENT BRIEF FOR AI DEVELOPER
+- Client: Tiny Boss (Age 4)
+- Game Style: 3D Driving &amp; Stunt World (Three.js Single-File HTML5)
+- The Hero: A bright blue monster truck with a shark fin on the roof, yellow KidClient glasses, orange wheel rims, and big monster tires.
+- The Goal: Drive around a sunny green island and chomp giant floating ice cream cones! Every cone plays a happy chime and makes the truck grow bigger.
+- Kid-Safe Rules: Surround the island with a glowing red bouncy bumper ring so the truck never falls off—hitting the edge bounces you back with a "BOING!"
+- Knock-Over Toys: Add colorful 3D block towers and purple jump ramps!
+- The Big Silly Button: A giant red "SILLY BUTTON" that blasts 3 buttered pancakes out of the front of the truck!</pre>
+    </div>
+
+    <div class="step-card">
+      <h2>Step 2: Paste the KidClient System Prompt Into Any Free AI</h2>
+      <p>Copy the prompt below and paste it into <strong>Claude (Free Artifacts)</strong>, <strong>ChatGPT (Canvas)</strong>, <strong>Google AI Studio (Gemini)</strong>, or <strong>Antigravity</strong> right above your child's brief:</p>
+      <button class="copy-btn" onclick="copyText('sys-code', this)">📋 Copy System Prompt</button>
+      <pre id="sys-code">You are the Lead Game Developer for "KidClient Studios." Take the 4-year-old Client Brief below and output a complete, runnable, tablet-ready 3D game in a SINGLE self-contained index.html file using Three.js (https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js).
+
+Rules:
+1. ZERO EXTERNAL BROKEN ASSETS: Build the Shark-Truck, ice cream cones, ramps, and block towers using Three.js 3D primitives (BoxGeometry, CylinderGeometry, ConeGeometry, SphereGeometry, TorusGeometry).
+2. SOUND &amp; VOICE SYNTH: Include a Web Audio API (AudioContext) sound synthesizer for boings, coin chimes, and silly horn sounds, plus window.speechSynthesis spoken praise every 5 points!
+3. TABLET &amp; IPAD CONTROLS: Include touch-action:none CSS, a bottom-left virtual thumbstick, and two giant bottom-right circular buttons: a green JUMP button and a glowing red "SILLY BUTTON" that shoots 3D pancakes.
+4. TODDLER UX: No game-over or death screens! Use bouncy ring bumpers, forgiving collection hitboxes, and save the high score to localStorage.</pre>
+    </div>
+
+    <div class="step-card">
+      <h2>Step 3: Turn AI Quirks Into Teaching Moments</h2>
+      <div class="teach-grid">
+        <div class="teach-item">
+          <strong>🛞 "Why are the wheels spinning sideways?"</strong>
+          <p style="margin:6px 0 0; color:var(--muted); font-size:15px;">Show your child that AI doesn't have eyes—it guessed the wrong rotation axis! Tell the AI together: <em>"Rotate the wheels on the X axis instead of Z."</em></p>
+        </div>
+        <div class="teach-item">
+          <strong>🥞 "Make the Silly Button 10x crazier!"</strong>
+          <p style="margin:6px 0 0; color:var(--muted); font-size:15px;">Let your child test QA and ask to change numbers: <em>"What happens if we shoot 3 pancakes at once and make them bounce off the floor?"</em></p>
+        </div>
+        <div class="teach-item">
+          <strong>📱 Install Offline on the iPad</strong>
+          <p style="margin:6px 0 0; color:var(--muted); font-size:15px;">Open <a href="https://kidclient.com" style="color:var(--accent)">kidclient.com</a> in Safari on the iPad, tap <strong>Share &rarr; Add to Home Screen</strong>, and play offline anywhere!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function copyText(id, btn) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const old = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => { btn.textContent = old; }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -5,49 +5,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="manifest" href="/manifest.json" />
-  <title>Bouncy Dino Star Party (2D Starter) | KidClient</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <title>Path B: 2D Bouncy Dino Star Party | KidClient Arcade</title>
   <style>
     * { box-sizing: border-box; }
     html, body {
       margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
-      background: #1e1b4b; font-family: system-ui, -apple-system, sans-serif;
+      background: #0f172a; font-family: system-ui, -apple-system, sans-serif;
       touch-action: none; user-select: none; -webkit-user-select: none; overscroll-behavior: none;
     }
     canvas { display: block; width: 100%; height: 100%; }
     #hud {
-      position: fixed; top: 16px; left: 16px; right: 16px;
+      position: fixed; top: 14px; left: 14px; right: 14px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 10; pointer-events: none;
     }
     .pill {
       pointer-events: auto;
-      background: rgba(15, 23, 42, 0.8); color: #fff;
-      padding: 10px 18px; border-radius: 999px;
-      font-size: 22px; font-weight: 800;
-      border: 3px solid rgba(255,255,255,0.25);
-      text-decoration: none;
+      background: rgba(15, 23, 42, 0.85); color: #fff;
+      padding: 8px 16px; border-radius: 999px;
+      font-size: 20px; font-weight: 800;
+      border: 3px solid rgba(56, 189, 248, 0.5);
+      text-decoration: none; display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
     }
+    .pill img { width: 34px; height: 34px; border-radius: 50%; border: 2px solid #facc15; }
     #controls {
       position: fixed; bottom: 24px; left: 24px; right: 24px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 20; pointer-events: none;
     }
-    .btn-group { display: flex; gap: 16px; pointer-events: auto; }
+    .btn-group { display: flex; gap: 16px; align-items: center; pointer-events: auto; }
     .touch-btn {
-      width: 88px; height: 88px; border-radius: 50%;
-      font-size: 40px; border: 4px solid #fff;
-      background: rgba(255,255,255,0.25); backdrop-filter: blur(6px);
+      width: 90px; height: 90px; border-radius: 50%;
+      font-size: 38px; border: 4px solid #fff;
+      background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(6px);
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3); cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4); cursor: pointer; color: #fff;
     }
     .touch-btn:active { transform: scale(0.9); }
-    .jump-btn { background: linear-gradient(135deg, #22c55e, #16a34a); }
-    .silly-btn { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .jump-btn {
+      background: radial-gradient(circle at 35% 30%, #4ade80, #16a34a);
+      font-size: 16px; font-weight: 900; flex-direction: column;
+    }
+    .silly-btn {
+      width: 104px; height: 104px;
+      background: radial-gradient(circle at 35% 30%, #ff4d4d, #dc2626 65%, #991b1b 100%);
+      border: 5px solid #cbd5e1;
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.8), 0 8px 20px rgba(0,0,0,0.5);
+      font-size: 14px; font-weight: 900; flex-direction: column; line-height: 1.05;
+    }
   </style>
 </head>
 <body>
   <div id="hud">
-    <a href="/" class="pill">🏠 Arcade</a>
+    <a href="/" class="pill">
+      <img src="/assets/brand/kidclient-avatar.png" alt="KidClient Mascot" />
+      <span>Arcade</span>
+    </a>
     <div class="pill">⭐ <span id="score">0</span> &nbsp;|&nbsp; 🏆 <span id="best">0</span></div>
   </div>
 
@@ -59,8 +74,14 @@
       <button class="touch-btn" id="btn-right">➡️</button>
     </div>
     <div class="btn-group">
-      <button class="touch-btn silly-btn" id="btn-silly">🎉</button>
-      <button class="touch-btn jump-btn" id="btn-jump">🚀</button>
+      <button class="touch-btn silly-btn" id="btn-silly">
+        <span style="font-size:26px">🎉</span>
+        SILLY<br/>BUTTON
+      </button>
+      <button class="touch-btn jump-btn" id="btn-jump">
+        <span style="font-size:28px">🚀</span>
+        JUMP
+      </button>
     </div>
   </div>
 
@@ -76,32 +97,44 @@
       H = canvas.height = window.innerHeight;
     });
 
+    // Load the actual KidClient Dino Boss Avatar as our playable hero!
+    const mascotImg = new Image();
+    mascotImg.src = '/assets/brand/kidclient-avatar.png';
+    const logoImg = new Image();
+    logoImg.src = '/assets/brand/kidclient-logo-3d.png';
+
     let score = 0;
     let best = KidShell.load('2d_best_stars', 0);
     const scoreEl = document.getElementById('score');
     const bestEl = document.getElementById('best');
     bestEl.textContent = best;
 
-    const dinoEmojis = ['🦖', '🦕', '🦄', '🐸', '🤖', '🦁'];
-    let currentEmojiIdx = 0;
+    const hats = ['', '👑', '🤠', '🎩', '🦄', '🦈'];
+    let hatIdx = 0;
 
     const player = {
-      x: W / 2, y: H - 180, vx: 0, vy: 0, size: 78,
-      onGround: false
+      x: W / 2, y: H - 220, vx: 0, vy: 0, radius: 52
     };
+
+    // Bouncy Trampoline Pads (like the hovering pads in the KidClient Banner!)
+    const pads = [
+      { x: 0.22, y: 0.68, w: 150 },
+      { x: 0.5, y: 0.52, w: 160 },
+      { x: 0.78, y: 0.68, w: 150 }
+    ];
 
     const stars = [];
     const particles = [];
 
     function spawnStar() {
       stars.push({
-        x: 80 + Math.random() * (W - 160),
-        y: 120 + Math.random() * (H - 280),
-        size: 48,
+        x: 90 + Math.random() * (W - 180),
+        y: 110 + Math.random() * (H - 310),
+        size: 46,
         bob: Math.random() * Math.PI * 2
       });
     }
-    for (let i = 0; i < 6; i++) spawnStar();
+    for (let i = 0; i < 7; i++) spawnStar();
 
     function burst(x, y, emoji = '✨') {
       for (let i = 0; i < 14; i++) {
@@ -111,7 +144,7 @@
           x, y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed - 2,
-          life: 40,
+          life: 42,
           emoji
         });
       }
@@ -139,17 +172,17 @@
     bindHold('btn-right', 'right');
 
     function jump() {
-      player.vy = -17;
+      player.vy = -17.5;
       KidShell.sfx.boing();
-      burst(player.x, player.y + 30, '💨');
+      burst(player.x, player.y + 40, '💨');
     }
 
     function sillyParty() {
-      currentEmojiIdx = (currentEmojiIdx + 1) % dinoEmojis.length;
-      player.vy = -14;
+      hatIdx = (hatIdx + 1) % hats.length;
+      player.vy = -15;
       KidShell.sfx.silly();
       burst(player.x, player.y, '🌈');
-      KidShell.say('Costume change!');
+      KidShell.say('Silly hat party!');
     }
 
     document.getElementById('btn-jump').addEventListener('pointerdown', (e) => { e.preventDefault(); jump(); });
@@ -160,36 +193,70 @@
       requestAnimationFrame(loop);
       t += 0.06;
 
-      // Sky gradient
+      // Deep Arcade Night Sky (Matches KidClient Brand Palette)
       const grad = ctx.createLinearGradient(0, 0, 0, H);
-      grad.addColorStop(0, '#38bdf8');
-      grad.addColorStop(1, '#bae6fd');
+      grad.addColorStop(0, '#0f172a');
+      grad.addColorStop(1, '#1e1b4b');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, W, H);
 
-      // Bouncy Trampoline Ground
-      const groundY = H - 90;
-      ctx.fillStyle = '#22c55e';
-      ctx.fillRect(0, groundY, W, 90);
+      // Subtle watermark of the 3D KidClient Logo in the background sky
+      if (logoImg.complete && logoImg.naturalWidth > 0) {
+        ctx.save();
+        ctx.globalAlpha = 0.14;
+        const lw = Math.min(340, W * 0.45);
+        const lh = lw * (logoImg.naturalHeight / logoImg.naturalWidth);
+        ctx.drawImage(logoImg, W / 2 - lw / 2, 75, lw, lh);
+        ctx.restore();
+      }
+
+      // Draw Hovering Neon Jump Pads
+      pads.forEach((p) => {
+        const px = p.x * W;
+        const py = p.y * H;
+        ctx.fillStyle = '#ec4899';
+        ctx.beginPath();
+        ctx.roundRect(px - p.w / 2, py, p.w, 22, 12);
+        ctx.fill();
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        // Bounce player if falling onto pad
+        if (
+          player.vy > 0 &&
+          player.x > px - p.w / 2 - 20 &&
+          player.x < px + p.w / 2 + 20 &&
+          player.y + player.radius > py &&
+          player.y + player.radius < py + 32
+        ) {
+          player.vy = -19;
+          KidShell.sfx.boing();
+          burst(player.x, py, '⚡');
+        }
+      });
+
+      // Bouncy Neon Turf Ground
+      const groundY = H - 86;
+      ctx.fillStyle = '#16a34a';
+      ctx.fillRect(0, groundY, W, 86);
       ctx.fillStyle = '#4ade80';
-      ctx.fillRect(0, groundY, W, 16);
+      ctx.fillRect(0, groundY, W, 14);
 
       // Move Player
-      if (input.left) player.vx = -8.5;
-      else if (input.right) player.vx = 8.5;
-      else player.vx *= 0.82;
+      if (input.left) player.vx = -9;
+      else if (input.right) player.vx = 9;
+      else player.vx *= 0.84;
 
       player.x += player.vx;
       player.vy += 0.65;
       player.y += player.vy;
 
-      // Wrap walls so the kid never gets stuck
-      if (player.x < 40) player.x = 40;
-      if (player.x > W - 40) player.x = W - 40;
+      if (player.x < 55) player.x = 55;
+      if (player.x > W - 55) player.x = W - 55;
 
-      // Ground bounce
-      if (player.y > groundY - 40) {
-        player.y = groundY - 40;
+      if (player.y > groundY - player.radius) {
+        player.y = groundY - player.radius;
         player.vy = 0;
       }
 
@@ -202,7 +269,7 @@
         ctx.font = `${s.size}px serif`;
         ctx.fillText('⭐', s.x, sy);
 
-        if (Math.hypot(player.x - s.x, player.y - sy) < 75) {
+        if (Math.hypot(player.x - s.x, player.y - sy) < 82) {
           stars.splice(i, 1);
           score++;
           scoreEl.textContent = score;
@@ -214,15 +281,38 @@
             KidShell.save('2d_best_stars', best);
           }
           if (score % 5 === 0) {
-            KidShell.say(`${score} stars! Super jumper!`);
+            KidShell.say(`${score} stars! Dino Boss is unstoppable!`);
           }
           spawnStar();
         }
       }
 
-      // Draw Hero
-      ctx.font = `${player.size}px serif`;
-      ctx.fillText(dinoEmojis[currentEmojiIdx], player.x, player.y);
+      // Draw Playable KidClient Dino Boss Avatar Token!
+      ctx.save();
+      ctx.translate(player.x, player.y);
+      ctx.rotate(player.vx * 0.025);
+      ctx.beginPath();
+      ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.save();
+      ctx.clip();
+      if (mascotImg.complete && mascotImg.naturalWidth > 0) {
+        ctx.drawImage(mascotImg, -player.radius, -player.radius, player.radius * 2, player.radius * 2);
+      } else {
+        ctx.fillStyle = '#22c55e';
+        ctx.fill();
+      }
+      ctx.restore();
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = '#38bdf8';
+      ctx.stroke();
+
+      // Draw silly hat on top of the Dino Boss!
+      if (hats[hatIdx]) {
+        ctx.font = '46px serif';
+        ctx.fillText(hats[hatIdx], 0, -player.radius - 16);
+      }
+      ctx.restore();
 
       // Draw Particles
       for (let i = particles.length - 1; i >= 0; i--) {
@@ -230,7 +320,7 @@
         p.x += p.vx;
         p.y += p.vy;
         p.life--;
-        ctx.globalAlpha = Math.max(0, p.life / 40);
+        ctx.globalAlpha = Math.max(0, p.life / 42);
         ctx.font = '28px serif';
         ctx.fillText(p.emoji, p.x, p.y);
         ctx.globalAlpha = 1;
