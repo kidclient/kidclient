@@ -1,17 +1,20 @@
-const CACHE_NAME = 'kidclient-arcade-v2';
+const CACHE_NAME = 'kidclient-arcade-v3';
 const CORE_ASSETS = [
   '/',
-  '/index.html',
   '/manifest.json',
   '/icon.svg',
   '/logo.svg',
   '/icon-192.png',
   '/icon-512.png',
   '/apple-touch-icon.png',
+  '/assets/brand/kidclient-avatar.png',
+  '/assets/brand/kidclient-logo-3d.png',
+  '/assets/brand/kidclient-banner.png',
   '/shared/kidclient-shell.js',
-  '/templates/3d-threejs/index.html',
-  '/templates/2d-arcade/index.html',
-  '/templates/voice-story-toy/index.html'
+  '/templates/3d-threejs/',
+  '/templates/2d-arcade/',
+  '/templates/voice-story-toy/',
+  '/tutorials/path-a-shark-truck/'
 ];
 
 self.addEventListener('install', (event) => {
@@ -31,17 +34,37 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      return (
-        cached ||
-        fetch(event.request).then((response) => {
-          if (event.request.method === 'GET' && response.status === 200) {
+  if (event.request.method !== 'GET') return;
+
+  // Network-first for HTML navigation so redirected /index.html responses are never served stale
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request, { redirect: 'follow' })
+        .then((response) => {
+          if (response && response.status === 200 && !response.redirected) {
             const clone = response.clone();
             caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
           }
           return response;
-        }).catch(() => cached)
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then((cached) => {
+      return (
+        cached ||
+        fetch(event.request, { redirect: 'follow' })
+          .then((response) => {
+            if (response && response.status === 200 && !response.redirected) {
+              const clone = response.clone();
+              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+            }
+            return response;
+          })
+          .catch(() => cached)
       );
     })
   );

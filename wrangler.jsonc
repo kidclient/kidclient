@@ -4,7 +4,8 @@
   "workers_dev": true,
   "preview_urls": true,
   "assets": {
-    "directory": "./site"
+    "directory": "./site",
+    "html_handling": "auto-trailing-slash"
   },
   "routes": [
     {
