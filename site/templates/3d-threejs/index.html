@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Shark-Truck Ice Cream Island (3D Starter) | KidClient</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+      background: #38bdf8; font-family: system-ui, -apple-system, sans-serif;
+      touch-action: none; user-select: none; -webkit-user-select: none; overscroll-behavior: none;
+    }
+    #hud {
+      position: fixed; top: 16px; left: 16px; right: 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      pointer-events: none; z-index: 10;
+    }
+    .pill {
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.8); color: #fff;
+      backdrop-filter: blur(8px);
+      padding: 10px 18px; border-radius: 999px;
+      font-size: 22px; font-weight: 800;
+      display: flex; align-items: center; gap: 10px;
+      border: 3px solid rgba(255,255,255,0.25);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      text-decoration: none;
+    }
+    #stick-zone {
+      position: fixed; bottom: 28px; left: 28px;
+      width: 140px; height: 140px; border-radius: 50%;
+      background: rgba(15, 23, 42, 0.35);
+      border: 4px solid rgba(255, 255, 255, 0.5);
+      z-index: 20; display: flex; align-items: center; justify-content: center;
+    }
+    #stick-knob {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: #facc15;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+      border: 4px solid #fff;
+      transition: transform 0.05s linear;
+    }
+    #action-buttons {
+      position: fixed; bottom: 28px; right: 28px;
+      display: flex; gap: 18px; z-index: 20;
+    }
+    .big-btn {
+      width: 92px; height: 92px; border-radius: 50%;
+      font-size: 42px; border: 5px solid #fff;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      cursor: pointer; active: scale(0.92);
+      transition: transform 0.1s;
+    }
+    .big-btn:active { transform: scale(0.9); }
+    #btn-jump { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    #btn-silly { background: linear-gradient(135deg, #ec4899, #db2777); }
+    #toast {
+      position: fixed; top: 90px; left: 50%; transform: translateX(-50%) scale(0);
+      background: #facc15; color: #0f172a; font-size: 28px; font-weight: 900;
+      padding: 12px 28px; border-radius: 999px; border: 4px solid #fff;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3); z-index: 30;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none; white-space: nowrap;
+    }
+    #toast.show { transform: translateX(-50%) scale(1); }
+  </style>
+</head>
+<body>
+  <div id="hud">
+    <a href="/" class="pill">🏠 Arcade</a>
+    <div class="pill">🍦 <span id="score">0</span> &nbsp;|&nbsp; 🏆 <span id="best">0</span></div>
+  </div>
+
+  <div id="toast">🦈 SHARK TRUCK PARTY! 🍦</div>
+
+  <div id="stick-zone">
+    <div id="stick-knob"></div>
+  </div>
+
+  <div id="action-buttons">
+    <button class="big-btn" id="btn-silly" aria-label="Silly Pancake Party">🥞</button>
+    <button class="big-btn" id="btn-jump" aria-label="Jump">🚀</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="/shared/kidclient-shell.js"></script>
+  <script>
+    // --- 1. SCORE & PERSISTENCE ---
+    let score = 0;
+    let best = KidShell.load('3d_best_cones', 0);
+    const scoreEl = document.getElementById('score');
+    const bestEl = document.getElementById('best');
+    const toastEl = document.getElementById('toast');
+    bestEl.textContent = best;
+
+    function showToast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      setTimeout(() => toastEl.classList.remove('show'), 1800);
+    }
+
+    // --- 2. THREE.JS SCENE SETUP ---
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x7dd3fc);
+    scene.fog = new THREE.Fog(0x7dd3fc, 35, 95);
+
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    document.body.appendChild(renderer.domElement);
+
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x4ade80, 0.85);
+    scene.add(hemiLight);
+
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
+    dirLight.position.set(20, 40, 20);
+    dirLight.castShadow = true;
+    scene.add(dirLight);
+
+    // Sunny grassy island
+    const islandGeo = new THREE.CylinderGeometry(45, 48, 4, 32);
+    const islandMat = new THREE.MeshLambertMaterial({ color: 0x4ade80 });
+    const island = new THREE.Mesh(islandGeo, islandMat);
+    island.position.y = -2;
+    island.receiveShadow = true;
+    scene.add(island);
+
+    // Bouncy ring border so the 4yo never falls off!
+    const borderGeo = new THREE.TorusGeometry(44, 1.5, 12, 48);
+    const borderMat = new THREE.MeshLambertMaterial({ color: 0xf43f5e });
+    const border = new THREE.Mesh(borderGeo, borderMat);
+    border.rotation.x = Math.PI / 2;
+    border.position.y = 0.8;
+    scene.add(border);
+
+    // --- 3. THE HERO: SHARK MONSTER TRUCK ---
+    const truck = new THREE.Group();
+    const bodyMat = new THREE.MeshPhongMaterial({ color: 0x0284c7, shininess: 80 });
+    const bodyMesh = new THREE.Mesh(new THREE.BoxGeometry(2.6, 1.4, 4.0), bodyMat);
+    bodyMesh.position.y = 1.4;
+    bodyMesh.castShadow = true;
+    truck.add(bodyMesh);
+
+    // Shark Fin on roof!
+    const finGeo = new THREE.ConeGeometry(0.6, 1.6, 4);
+    const finMesh = new THREE.Mesh(finGeo, bodyMat);
+    finMesh.position.set(0, 2.7, -0.3);
+    finMesh.rotation.x = -0.3;
+    truck.add(finMesh);
+
+    // Googly Eyes
+    const eyeWhite = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const eyePupil = new THREE.MeshBasicMaterial({ color: 0x0f172a });
+    [-0.7, 0.7].forEach((x) => {
+      const eye = new THREE.Mesh(new THREE.SphereGeometry(0.35, 12, 12), eyeWhite);
+      eye.position.set(x, 1.8, 2.0);
+      const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.18, 10, 10), eyePupil);
+      pupil.position.set(x, 1.8, 2.28);
+      truck.add(eye, pupil);
+    });
+
+    // 4 Giant Monster Tires
+    const wheelGeo = new THREE.CylinderGeometry(0.95, 0.95, 0.8, 16);
+    const wheelMat = new THREE.MeshLambertMaterial({ color: 0x1e293b });
+    const wheels = [];
+    [[-1.5, 1.4], [1.5, 1.4], [-1.5, -1.4], [1.5, -1.4]].forEach(([x, z]) => {
+      const w = new THREE.Mesh(wheelGeo, wheelMat);
+      w.rotation.z = Math.PI / 2;
+      w.position.set(x, 0.95, z);
+      w.castShadow = true;
+      truck.add(w);
+      wheels.push(w);
+    });
+
+    scene.add(truck);
+
+    // --- 4. FLOATING ICE CREAM CONES TO COLLECT ---
+    const cones = [];
+    const coneMat = new THREE.MeshLambertMaterial({ color: 0xf59e0b });
+    const scoopColors = [0xf472b6, 0xa78bfa, 0xfef08a, 0x34d399, 0x60a5fa];
+
+    function spawnCone() {
+      const group = new THREE.Group();
+      const waffle = new THREE.Mesh(new THREE.ConeGeometry(0.65, 1.6, 12), coneMat);
+      waffle.rotation.x = Math.PI;
+      waffle.position.y = 1.0;
+      const scoopColor = scoopColors[Math.floor(Math.random() * scoopColors.length)];
+      const scoop = new THREE.Mesh(
+        new THREE.SphereGeometry(0.75, 14, 14),
+        new THREE.MeshPhongMaterial({ color: scoopColor })
+      );
+      scoop.position.y = 2.0;
+      group.add(waffle, scoop);
+
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 6 + Math.random() * 32;
+      group.position.set(Math.cos(angle) * radius, 0.5, Math.sin(angle) * radius);
+      scene.add(group);
+      cones.push(group);
+    }
+
+    for (let i = 0; i < 14; i++) spawnCone();
+
+    // --- 5. SILLY PANCAKE PROJECTILES ---
+    const pancakes = [];
+    const pancakeGeo = new THREE.CylinderGeometry(1.1, 1.1, 0.25, 16);
+    const pancakeMat = new THREE.MeshLambertMaterial({ color: 0xfbbf24 });
+
+    function launchPancake() {
+      KidShell.sfx.silly();
+      const p = new THREE.Mesh(pancakeGeo, pancakeMat);
+      p.position.copy(truck.position);
+      p.position.y += 2.2;
+      const dir = new THREE.Vector3(0, 0.35, 1).applyAxisAngle(new THREE.Vector3(0, 1, 0), truckAngle);
+      p.userData = { vel: dir.multiplyScalar(0.75), life: 90 };
+      scene.add(p);
+      pancakes.push(p);
+      showToast('🥞 FLAPJACK BLAST!');
+    }
+
+    // --- 6. CONTROLS (TOUCH JOYSTICK + KEYBOARD) ---
+    let inputX = 0, inputY = 0;
+    let velocityY = 0;
+    let truckAngle = 0;
+    const keys = {};
+
+    window.addEventListener('keydown', (e) => {
+      keys[e.code] = true;
+      if (e.code === 'Space') jump();
+      if (e.code === 'KeyE' || e.code === 'Enter') launchPancake();
+    });
+    window.addEventListener('keyup', (e) => { keys[e.code] = false; });
+
+    function jump() {
+      if (truck.position.y <= 0.1) {
+        velocityY = 0.42;
+        KidShell.sfx.boing();
+      }
+    }
+
+    document.getElementById('btn-jump').addEventListener('pointerdown', (e) => {
+      e.preventDefault(); jump();
+    });
+    document.getElementById('btn-silly').addEventListener('pointerdown', (e) => {
+      e.preventDefault(); launchPancake();
+    });
+
+    const stickZone = document.getElementById('stick-zone');
+    const stickKnob = document.getElementById('stick-knob');
+    let stickActive = false;
+
+    function handleStick(e) {
+      const rect = stickZone.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      let dx = e.clientX - cx;
+      let dy = e.clientY - cy;
+      const maxR = 44;
+      const dist = Math.hypot(dx, dy);
+      if (dist > maxR) {
+        dx = (dx / dist) * maxR;
+        dy = (dy / dist) * maxR;
+      }
+      stickKnob.style.transform = `translate(${dx}px, ${dy}px)`;
+      inputX = dx / maxR;
+      inputY = dy / maxR;
+    }
+
+    stickZone.addEventListener('pointerdown', (e) => {
+      stickActive = true;
+      stickZone.setPointerCapture(e.pointerId);
+      handleStick(e);
+    });
+    stickZone.addEventListener('pointermove', (e) => {
+      if (stickActive) handleStick(e);
+    });
+    const resetStick = () => {
+      stickActive = false;
+      stickKnob.style.transform = 'translate(0px, 0px)';
+      inputX = 0; inputY = 0;
+    };
+    stickZone.addEventListener('pointerup', resetStick);
+    stickZone.addEventListener('pointercancel', resetStick);
+
+    // --- 7. MAIN GAME LOOP ---
+    let clock = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+      clock += 0.05;
+
+      let steer = inputX;
+      let throttle = -inputY;
+      if (keys['ArrowLeft'] || keys['KeyA']) steer = -1;
+      if (keys['ArrowRight'] || keys['KeyD']) steer = 1;
+      if (keys['ArrowUp'] || keys['KeyW']) throttle = 1;
+      if (keys['ArrowDown'] || keys['KeyS']) throttle = -0.6;
+
+      truckAngle -= steer * 0.055;
+      truck.rotation.y = truckAngle;
+
+      const speed = throttle * 0.36;
+      truck.position.x += Math.sin(truckAngle) * speed;
+      truck.position.z += Math.cos(truckAngle) * speed;
+
+      // Spin tires
+      wheels.forEach((w) => { w.rotation.x += speed * 0.5; });
+
+      // Bouncy Ring Boundary (Never fall off!)
+      const distFromCenter = Math.hypot(truck.position.x, truck.position.z);
+      if (distFromCenter > 41) {
+        const pushAngle = Math.atan2(truck.position.x, truck.position.z);
+        truck.position.x = Math.sin(pushAngle) * 40.5;
+        truck.position.z = Math.cos(pushAngle) * 40.5;
+        velocityY = 0.32;
+        KidShell.sfx.boing();
+        showToast('BOING! Bouncy Bumper!');
+      }
+
+      // Gravity & Jump
+      truck.position.y += velocityY;
+      if (truck.position.y > 0) {
+        velocityY -= 0.018;
+      } else {
+        truck.position.y = 0;
+        velocityY = 0;
+      }
+
+      // Collect Ice Cream Cones (Forgiving 4yo Hitbox!)
+      for (let i = cones.length - 1; i >= 0; i--) {
+        const c = cones[i];
+        c.rotation.y += 0.04;
+        c.position.y = 0.5 + Math.sin(clock + i) * 0.35;
+        if (c.position.distanceTo(truck.position) < 3.6) {
+          scene.remove(c);
+          cones.splice(i, 1);
+          score++;
+          scoreEl.textContent = score;
+          KidShell.sfx.coin();
+
+          // Truck grows slightly!
+          const scale = Math.min(1 + score * 0.015, 1.6);
+          truck.scale.set(scale, scale, scale);
+
+          if (score > best) {
+            best = score;
+            bestEl.textContent = best;
+            KidShell.save('3d_best_cones', best);
+          }
+          if (score % 5 === 0) {
+            showToast(`🎉 ${score} ICE CREAMS! YUM!`);
+            KidShell.say(`${score} ice creams! Awesome driving!`);
+          }
+          spawnCone();
+        }
+      }
+
+      // Update silly pancakes
+      for (let i = pancakes.length - 1; i >= 0; i--) {
+        const p = pancakes[i];
+        p.position.add(p.userData.vel);
+        p.userData.vel.y -= 0.015;
+        p.rotation.x += 0.15;
+        p.userData.life--;
+        if (p.position.y < 0.2) {
+          p.position.y = 0.2;
+          p.userData.vel.y *= -0.6;
+        }
+        if (p.userData.life <= 0) {
+          scene.remove(p);
+          pancakes.splice(i, 1);
+        }
+      }
+
+      // Smooth follow camera
+      const camOffset = new THREE.Vector3(
+        -Math.sin(truckAngle) * 12,
+        7.5,
+        -Math.cos(truckAngle) * 12
+      );
+      camera.position.lerp(truck.position.clone().add(camOffset), 0.1);
+      camera.lookAt(truck.position.x, truck.position.y + 1.5, truck.position.z);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>

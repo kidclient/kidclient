@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Magic Talking Sticker Canvas (Voice & Story Starter) | KidClient</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+      background: #fdf4ff; font-family: system-ui, -apple-system, sans-serif;
+      touch-action: none; user-select: none; -webkit-user-select: none; overscroll-behavior: none;
+    }
+    canvas { display: block; width: 100%; height: 100%; }
+    #topbar {
+      position: fixed; top: 16px; left: 16px; right: 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 10; pointer-events: none;
+    }
+    .pill {
+      pointer-events: auto;
+      background: #0f172a; color: #fff;
+      padding: 10px 18px; border-radius: 999px;
+      font-size: 20px; font-weight: 800;
+      text-decoration: none; border: 3px solid #fff;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+    #sticker-bar {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 12px; background: rgba(15, 23, 42, 0.85);
+      padding: 12px 20px; border-radius: 999px; z-index: 20;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .sticker-btn {
+      width: 68px; height: 68px; border-radius: 50%;
+      font-size: 36px; border: 3px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.15); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.15s;
+    }
+    .sticker-btn.active {
+      transform: scale(1.2); border-color: #facc15; background: rgba(250, 204, 21, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div id="topbar">
+    <a href="/" class="pill">🏠 Arcade</a>
+    <button class="pill" id="btn-story">🗣️ Tell Me a Story!</button>
+    <button class="pill" id="btn-clear">🧹 Clear</button>
+  </div>
+
+  <canvas id="board"></canvas>
+
+  <div id="sticker-bar"></div>
+
+  <script src="/shared/kidclient-shell.js"></script>
+  <script>
+    const canvas = document.getElementById('board');
+    const ctx = canvas.getContext('2d');
+    let W = (canvas.width = window.innerWidth);
+    let H = (canvas.height = window.innerHeight);
+
+    const catalog = [
+      { emoji: '🦖', name: 'T-Rex Dinosaur', sound: 'Roar! I am a hungry dinosaur!' },
+      { emoji: '🚀', name: 'Rocket Ship', sound: 'Three, two, one, blast off to the moon!' },
+      { emoji: '🦄', name: 'Magic Unicorn', sound: 'Sparkle power!' },
+      { emoji: '🚒', name: 'Fire Truck', sound: 'Wee-ooo wee-ooo! Fire truck on the way!' },
+      { emoji: '🍦', name: 'Giant Ice Cream', sound: 'Yummy strawberry ice cream!' },
+      { emoji: '🌈', name: 'Rainbow Brush', sound: 'Rainbow magic!' }
+    ];
+
+    let selected = catalog[0];
+    const placedStickers = [];
+    const bar = document.getElementById('sticker-bar');
+
+    catalog.forEach((item, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'sticker-btn' + (idx === 0 ? ' active' : '');
+      btn.textContent = item.emoji;
+      btn.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.sticker-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        selected = item;
+        KidShell.sfx.coin();
+        KidShell.say(item.name);
+      });
+      bar.appendChild(btn);
+    });
+
+    function stamp(x, y) {
+      placedStickers.push({
+        x, y,
+        emoji: selected.emoji,
+        name: selected.name,
+        scale: 0.2,
+        wobble: Math.random() * Math.PI * 2
+      });
+      KidShell.sfx.boing();
+    }
+
+    let drawing = false;
+    canvas.addEventListener('pointerdown', (e) => {
+      drawing = true;
+      stamp(e.clientX, e.clientY);
+      KidShell.say(selected.sound);
+    });
+    canvas.addEventListener('pointermove', (e) => {
+      if (drawing && selected.emoji === '🌈') {
+        stamp(e.clientX, e.clientY);
+      }
+    });
+    window.addEventListener('pointerup', () => { drawing = false; });
+
+    document.getElementById('btn-clear').addEventListener('pointerdown', () => {
+      placedStickers.length = 0;
+      KidShell.sfx.silly();
+      KidShell.say('All clean! Ready for a new picture!');
+    });
+
+    document.getElementById('btn-story').addEventListener('pointerdown', () => {
+      if (placedStickers.length === 0) {
+        KidShell.say('Tap the screen to put some stickers in your world first!');
+        return;
+      }
+      const uniqueNames = [...new Set(placedStickers.map((s) => s.name))];
+      const story = `Once upon a time, there was a ${uniqueNames.join(' and a ')} having the best party ever! Count them: ${placedStickers.length} stickers on your screen!`;
+      KidShell.sfx.coin();
+      KidShell.say(story);
+    });
+
+    let t = 0;
+    function render() {
+      requestAnimationFrame(render);
+      t += 0.06;
+      ctx.fillStyle = '#fdf4ff';
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for (const s of placedStickers) {
+        if (s.scale < 1) s.scale += (1 - s.scale) * 0.2;
+        const size = 68 * s.scale;
+        ctx.save();
+        ctx.translate(s.x, s.y);
+        ctx.rotate(Math.sin(t + s.wobble) * 0.08);
+        ctx.font = `${size}px serif`;
+        ctx.fillText(s.emoji, 0, 0);
+        ctx.restore();
+      }
+    }
+    render();
+  </script>
+</body>
+</html>
