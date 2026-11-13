@@ -16,10 +16,10 @@ Place each new episode inside `site/episodes/<episode-slug>/`:
 1. Add a card for the new episode in `site/index.html`.
 2. Add `/episodes/<episode-slug>/index.html` to `CORE_ASSETS` in `site/sw.js` and bump `CACHE_NAME` so tablets cache the new game for offline play.
 
-## 3. Deploy to Cloudflare Pages (`wrangler`)
+## 3. Deploy to Cloudflare (`wrangler`)
 Run from the workspace root (`/Users/jared/Documents/antigravity/calm-darwin`):
 ```bash
-wrangler pages deploy ./site --project-name=kidclient --branch=main
+wrangler deploy
 ```
 
 ## 4. Commit & Push to GitHub (`gh` / `git`)
