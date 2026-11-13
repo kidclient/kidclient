@@ -4,8 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="KidClient — Teaching parents how to partner with their young children to build AI video games, stories, and toys together." />
+  <meta property="og:title" content="KidClient — The Parent-Consultant &amp; Tiny-Client AI Game Studio" />
+  <meta property="og:description" content="My 4-year-old pitches the wild game ideas. I act as the AI Consultant. Play our tablet-ready starter games &amp; grab the free Parent .MD Kit!" />
+  <meta property="og:image" content="/assets/brand/kidclient-banner.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <title>KidClient — My 4-Year-Old is the Client, I'm the AI Consultant</title>
   <style>
     :root {
@@ -30,8 +35,19 @@
       gap: 16px; padding: 12px 0 32px; border-bottom: 1px solid rgba(255,255,255,0.1);
     }
     .brand {
-      display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 900;
+      display: flex; align-items: center; gap: 14px; font-size: 26px; font-weight: 900;
       color: #fff; text-decoration: none;
+    }
+    .brand-logo {
+      height: 56px; width: auto; display: block;
+      filter: drop-shadow(0 4px 12px rgba(56, 189, 248, 0.25));
+      transition: transform 0.2s;
+    }
+    .brand:hover .brand-logo { transform: scale(1.03); }
+    .hero-mascot {
+      width: 136px; height: 136px; border-radius: 32px; margin: 0 auto 20px;
+      display: block; box-shadow: 0 14px 35px rgba(56, 189, 248, 0.35);
+      border: 2px solid rgba(56, 189, 248, 0.5);
     }
     .nav-links { display: flex; flex-wrap: wrap; gap: 12px; }
     .nav-links a {
@@ -114,7 +130,9 @@
 <body>
   <div class="container">
     <header>
-      <a href="/" class="brand">🦖 KidClient</a>
+      <a href="/" class="brand" aria-label="KidClient Home">
+        <img src="/logo.svg" alt="KidClient — Tiny Creative Director • AI Game Studio" class="brand-logo" />
+      </a>
       <nav class="nav-links">
         <a href="https://youtube.com/@kidclient" target="_blank" rel="noopener">📺 YouTube</a>
         <a href="https://github.com/kidclient/kidclient" target="_blank" rel="noopener">💻 GitHub & .md Kit</a>
@@ -124,6 +142,7 @@
     </header>
 
     <section class="hero">
+      <img src="/icon-512.png" alt="KidClient Tiny Dino Boss Mascot" class="hero-mascot" />
       <div class="badge">👔 Parent Consultant + 🧒 4-Year-Old Client</div>
       <h1>Turn Tablet Time Into<br /><span>AI Game Creation Together</span></h1>
       <p class="subtitle">

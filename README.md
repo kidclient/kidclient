@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="site/assets/brand/kidclient-banner.png" alt="KidClient — The Parent-Consultant & Tiny-Client AI Game Studio" width="100%" />
+</p>
+
 # 🦖 KidClient — The Parent-Consultant & Tiny-Client AI Game Studio
 
 Welcome to the official repository for **KidClient** ([kidclient.com](https://kidclient.com) | [@kidclient on YouTube](https://youtube.com/@kidclient))!

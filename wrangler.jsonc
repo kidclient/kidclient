@@ -1,7 +1,19 @@
 {
   "name": "kidclient",
   "compatibility_date": "2026-11-13",
+  "workers_dev": true,
+  "preview_urls": true,
   "assets": {
     "directory": "./site"
-  }
+  },
+  "routes": [
+    {
+      "pattern": "kidclient.com/*",
+      "zone_name": "kidclient.com"
+    },
+    {
+      "pattern": "www.kidclient.com/*",
+      "zone_name": "kidclient.com"
+    }
+  ]
 }

@@ -1,9 +1,13 @@
-const CACHE_NAME = 'kidclient-arcade-v1';
+const CACHE_NAME = 'kidclient-arcade-v2';
 const CORE_ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
   '/icon.svg',
+  '/logo.svg',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/apple-touch-icon.png',
   '/shared/kidclient-shell.js',
   '/templates/3d-threejs/index.html',
   '/templates/2d-arcade/index.html',
