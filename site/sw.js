@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kidclient-arcade-v5';
+const CACHE_NAME = 'kidclient-arcade-v6';
 const CORE_ASSETS = [
   '/',
   '/manifest.json',
