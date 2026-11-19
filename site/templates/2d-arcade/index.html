@@ -6,12 +6,13 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-  <title>Path B: 2D Bouncy Dino Star Party | KidClient Arcade</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet" />
+  <title>Brief #02: Clay Dino Star Bounce | KidClient</title>
   <style>
     * { box-sizing: border-box; }
     html, body {
       margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
-      background: #0f172a; font-family: system-ui, -apple-system, sans-serif;
+      background: #F7F5EE; font-family: 'Space Grotesk', system-ui, sans-serif;
       touch-action: none; user-select: none; -webkit-user-select: none; overscroll-behavior: none;
     }
     canvas { display: block; width: 100%; height: 100%; }
@@ -22,64 +23,65 @@
     }
     .pill {
       pointer-events: auto;
-      background: rgba(15, 23, 42, 0.85); color: #fff;
-      padding: 8px 16px; border-radius: 999px;
-      font-size: 20px; font-weight: 800;
-      border: 3px solid rgba(56, 189, 248, 0.5);
-      text-decoration: none; display: flex; align-items: center; gap: 10px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      background: #F7F5EE; color: #1C1E21;
+      padding: 7px 15px; border-radius: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px; font-weight: 800;
+      border: 2.5px solid #1C1E21;
+      text-decoration: none; display: flex; align-items: center; gap: 9px;
+      box-shadow: 4px 4px 0 #1C1E21;
     }
-    .pill img { width: 34px; height: 34px; border-radius: 50%; border: 2px solid #facc15; }
+    .pill img { width: 32px; height: 32px; border-radius: 8px; border: 2px solid #1C1E21; object-fit: cover; }
     #controls {
       position: fixed; bottom: 24px; left: 24px; right: 24px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 20; pointer-events: none;
     }
-    .btn-group { display: flex; gap: 16px; align-items: center; pointer-events: auto; }
+    .btn-group { display: flex; gap: 14px; align-items: center; pointer-events: auto; }
     .touch-btn {
-      width: 90px; height: 90px; border-radius: 50%;
-      font-size: 38px; border: 4px solid #fff;
-      background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(6px);
+      width: 88px; height: 88px; border-radius: 22px;
+      font-size: 32px; border: 3.5px solid #1C1E21;
+      background: #F6C945; color: #1C1E21;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4); cursor: pointer; color: #fff;
+      box-shadow: 0 6px 0 #1C1E21; cursor: pointer;
+      font-family: 'JetBrains Mono', monospace; font-weight: 800;
+      transition: transform 0.08s, box-shadow 0.08s;
     }
-    .touch-btn:active { transform: scale(0.9); }
+    .touch-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #1C1E21; }
     .jump-btn {
-      background: radial-gradient(circle at 35% 30%, #4ade80, #16a34a);
-      font-size: 16px; font-weight: 900; flex-direction: column;
+      border-radius: 50%; background: #2E8B57; color: #fff;
+      font-size: 13px; flex-direction: column;
     }
     .silly-btn {
-      width: 104px; height: 104px;
-      background: radial-gradient(circle at 35% 30%, #ff4d4d, #dc2626 65%, #991b1b 100%);
-      border: 5px solid #cbd5e1;
-      box-shadow: 0 0 24px rgba(56, 189, 248, 0.8), 0 8px 20px rgba(0,0,0,0.5);
-      font-size: 14px; font-weight: 900; flex-direction: column; line-height: 1.05;
+      width: 98px; height: 98px; border-radius: 50%;
+      background: #F02D2D; color: #fff;
+      font-size: 13px; flex-direction: column; line-height: 1.05;
     }
   </style>
 </head>
 <body>
   <div id="hud">
     <a href="/" class="pill">
-      <img src="/assets/brand/kidclient-avatar.png" alt="KidClient Mascot" />
-      <span>Arcade</span>
+      <img src="/assets/brand/clay-dino-avatar.jpg" alt="KidClient" />
+      <span>ARCADE</span>
     </a>
-    <div class="pill">⭐ <span id="score">0</span> &nbsp;|&nbsp; 🏆 <span id="best">0</span></div>
+    <div class="pill">★ <span id="score">0</span> &nbsp;|&nbsp; BEST <span id="best">0</span></div>
   </div>
 
   <canvas id="game"></canvas>
 
   <div id="controls">
     <div class="btn-group">
-      <button class="touch-btn" id="btn-left">⬅️</button>
-      <button class="touch-btn" id="btn-right">➡️</button>
+      <button class="touch-btn" id="btn-left">◀</button>
+      <button class="touch-btn" id="btn-right">▶</button>
     </div>
     <div class="btn-group">
       <button class="touch-btn silly-btn" id="btn-silly">
-        <span style="font-size:26px">🎉</span>
-        SILLY<br/>BUTTON
+        <span style="font-size:26px">👑</span>
+        SILLY<br/>HAT
       </button>
       <button class="touch-btn jump-btn" id="btn-jump">
-        <span style="font-size:28px">🚀</span>
+        <span style="font-size:26px">🚀</span>
         JUMP
       </button>
     </div>
@@ -97,11 +99,8 @@
       H = canvas.height = window.innerHeight;
     });
 
-    // Load the actual KidClient Dino Boss Avatar as our playable hero!
     const mascotImg = new Image();
-    mascotImg.src = '/assets/brand/kidclient-avatar.png';
-    const logoImg = new Image();
-    logoImg.src = '/assets/brand/kidclient-logo-3d.png';
+    mascotImg.src = '/assets/brand/clay-dino-avatar.jpg';
 
     let score = 0;
     let best = KidShell.load('2d_best_stars', 0);
@@ -109,23 +108,19 @@
     const bestEl = document.getElementById('best');
     bestEl.textContent = best;
 
-    const hats = ['', '👑', '🤠', '🎩', '🦄', '🦈'];
+    const hats = ['', '🤠', '🎩', '🦄', '🦈', '🚀'];
     let hatIdx = 0;
+    const player = { x: W / 2, y: H - 220, vx: 0, vy: 0, radius: 52 };
 
-    const player = {
-      x: W / 2, y: H - 220, vx: 0, vy: 0, radius: 52
-    };
-
-    // Bouncy Trampoline Pads (like the hovering pads in the KidClient Banner!)
+    // Tactile Swiss/Toybox Jump Pads
     const pads = [
-      { x: 0.22, y: 0.68, w: 150 },
-      { x: 0.5, y: 0.52, w: 160 },
-      { x: 0.78, y: 0.68, w: 150 }
+      { x: 0.22, y: 0.66, w: 155, color: '#1546F6' },
+      { x: 0.5, y: 0.48, w: 170, color: '#E55B4B' },
+      { x: 0.78, y: 0.66, w: 155, color: '#F6C945' }
     ];
 
     const stars = [];
     const particles = [];
-
     function spawnStar() {
       stars.push({
         x: 90 + Math.random() * (W - 180),
@@ -136,17 +131,11 @@
     }
     for (let i = 0; i < 7; i++) spawnStar();
 
-    function burst(x, y, emoji = '✨') {
-      for (let i = 0; i < 14; i++) {
-        const angle = (Math.PI * 2 * i) / 14;
-        const speed = 3 + Math.random() * 6;
-        particles.push({
-          x, y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed - 2,
-          life: 42,
-          emoji
-        });
+    function burst(x, y, emoji = '★') {
+      for (let i = 0; i < 12; i++) {
+        const angle = (Math.PI * 2 * i) / 12;
+        const speed = 3 + Math.random() * 5.5;
+        particles.push({ x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 2, life: 40, emoji });
       }
     }
 
@@ -182,7 +171,7 @@
       player.vy = -15;
       KidShell.sfx.silly();
       burst(player.x, player.y, '🌈');
-      KidShell.say('Silly hat party!');
+      KidShell.say('New silly hat!');
     }
 
     document.getElementById('btn-jump').addEventListener('pointerdown', (e) => { e.preventDefault(); jump(); });
@@ -193,57 +182,54 @@
       requestAnimationFrame(loop);
       t += 0.06;
 
-      // Deep Arcade Night Sky (Matches KidClient Brand Palette)
-      const grad = ctx.createLinearGradient(0, 0, 0, H);
-      grad.addColorStop(0, '#0f172a');
-      grad.addColorStop(1, '#1e1b4b');
-      ctx.fillStyle = grad;
+      // Warm Swiss Graph Paper Canvas (Hybrid Dir 1 + Dir 2!)
+      ctx.fillStyle = '#F7F5EE';
       ctx.fillRect(0, 0, W, H);
-
-      // Subtle watermark of the 3D KidClient Logo in the background sky
-      if (logoImg.complete && logoImg.naturalWidth > 0) {
-        ctx.save();
-        ctx.globalAlpha = 0.14;
-        const lw = Math.min(340, W * 0.45);
-        const lh = lw * (logoImg.naturalHeight / logoImg.naturalWidth);
-        ctx.drawImage(logoImg, W / 2 - lw / 2, 75, lw, lh);
-        ctx.restore();
+      ctx.strokeStyle = 'rgba(28, 30, 33, 0.08)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < W; x += 32) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+      }
+      for (let y = 0; y < H; y += 32) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
       }
 
-      // Draw Hovering Neon Jump Pads
+      // Faint Agency Watermark
+      ctx.fillStyle = 'rgba(28, 30, 33, 0.06)';
+      ctx.font = '800 52px "Space Grotesk", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('BRIEF #02 // CLAY DINO BOUNCE', W / 2, 130);
+
+      // Draw Tactile Wooden Jump Pads with Hard Ink Shadow
       pads.forEach((p) => {
         const px = p.x * W;
         const py = p.y * H;
-        ctx.fillStyle = '#ec4899';
-        ctx.beginPath();
-        ctx.roundRect(px - p.w / 2, py, p.w, 22, 12);
-        ctx.fill();
-        ctx.strokeStyle = '#38bdf8';
-        ctx.lineWidth = 4;
-        ctx.stroke();
+        ctx.fillStyle = '#1C1E21';
+        ctx.beginPath(); ctx.roundRect(px - p.w / 2 + 5, py + 5, p.w, 24, 10); ctx.fill();
+        ctx.fillStyle = p.color;
+        ctx.beginPath(); ctx.roundRect(px - p.w / 2, py, p.w, 24, 10); ctx.fill();
+        ctx.strokeStyle = '#1C1E21'; ctx.lineWidth = 3; ctx.stroke();
 
-        // Bounce player if falling onto pad
         if (
           player.vy > 0 &&
           player.x > px - p.w / 2 - 20 &&
           player.x < px + p.w / 2 + 20 &&
           player.y + player.radius > py &&
-          player.y + player.radius < py + 32
+          player.y + player.radius < py + 34
         ) {
           player.vy = -19;
           KidShell.sfx.boing();
-          burst(player.x, py, '⚡');
+          burst(player.x, py, '✨');
         }
       });
 
-      // Bouncy Neon Turf Ground
+      // Warm Forest Green Felt Floor with Bold Ink Border
       const groundY = H - 86;
-      ctx.fillStyle = '#16a34a';
+      ctx.fillStyle = '#5ea373';
       ctx.fillRect(0, groundY, W, 86);
-      ctx.fillStyle = '#4ade80';
-      ctx.fillRect(0, groundY, W, 14);
+      ctx.fillStyle = '#1C1E21';
+      ctx.fillRect(0, groundY, W, 4);
 
-      // Move Player
       if (input.left) player.vx = -9;
       else if (input.right) player.vx = 9;
       else player.vx *= 0.84;
@@ -254,13 +240,12 @@
 
       if (player.x < 55) player.x = 55;
       if (player.x > W - 55) player.x = W - 55;
-
       if (player.y > groundY - player.radius) {
         player.y = groundY - player.radius;
         player.vy = 0;
       }
 
-      // Draw & Collect Stars
+      // Gold Foil Star Stickers
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       for (let i = stars.length - 1; i >= 0; i--) {
@@ -280,17 +265,20 @@
             bestEl.textContent = best;
             KidShell.save('2d_best_stars', best);
           }
-          if (score % 5 === 0) {
-            KidShell.say(`${score} stars! Dino Boss is unstoppable!`);
-          }
+          if (score % 5 === 0) KidShell.say(`${score} stars! Approved by the 4 year old!`);
           spawnStar();
         }
       }
 
-      // Draw Playable KidClient Dino Boss Avatar Token!
+      // Playable Clay Dino Sticker Token with Hard Shadow
       ctx.save();
       ctx.translate(player.x, player.y);
       ctx.rotate(player.vx * 0.025);
+      ctx.beginPath();
+      ctx.arc(5, 5, player.radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#1C1E21';
+      ctx.fill();
+
       ctx.beginPath();
       ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
       ctx.closePath();
@@ -299,29 +287,25 @@
       if (mascotImg.complete && mascotImg.naturalWidth > 0) {
         ctx.drawImage(mascotImg, -player.radius, -player.radius, player.radius * 2, player.radius * 2);
       } else {
-        ctx.fillStyle = '#22c55e';
+        ctx.fillStyle = '#F6C945';
         ctx.fill();
       }
       ctx.restore();
-      ctx.lineWidth = 5;
-      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = '#1C1E21';
       ctx.stroke();
 
-      // Draw silly hat on top of the Dino Boss!
       if (hats[hatIdx]) {
-        ctx.font = '46px serif';
+        ctx.font = '44px serif';
         ctx.fillText(hats[hatIdx], 0, -player.radius - 16);
       }
       ctx.restore();
 
-      // Draw Particles
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life--;
-        ctx.globalAlpha = Math.max(0, p.life / 42);
-        ctx.font = '28px serif';
+        p.x += p.vx; p.y += p.vy; p.life--;
+        ctx.globalAlpha = Math.max(0, p.life / 40);
+        ctx.font = '26px serif';
         ctx.fillText(p.emoji, p.x, p.y);
         ctx.globalAlpha = 1;
         if (p.life <= 0) particles.splice(i, 1);

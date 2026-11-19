@@ -3,214 +3,670 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="KidClient — Teaching parents how to partner with their young children to build AI video games, stories, and toys together." />
-  <meta property="og:title" content="KidClient — The Parent-Consultant &amp; Tiny-Client AI Game Studio" />
-  <meta property="og:description" content="My 4-year-old pitches the wild game ideas. I act as the AI Consultant. Play our tablet-ready starter games &amp; grab the free Parent .MD Kit!" />
-  <meta property="og:image" content="/assets/brand/kidclient-banner.png" />
+  <meta name="description" content="KidClient — My 4-year-old is the Creative Director. I'm the AI Consultant. Play tactile tablet games and grab the free Parent .MD Kit." />
+  <meta property="og:title" content="KidClient — 4-Year-Old Client + Parent AI Consultant" />
+  <meta property="og:description" content="We treat screen time like a creative studio: the 4-year-old pitches wild game specs, we build them with AI, and share every prompt &amp; game for free." />
+  <meta property="og:image" content="/assets/brand/kidclient-og-1280x720.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <title>KidClient — My 4-Year-Old is the Client, I'm the AI Consultant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=JetBrains+Mono:wght@500;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet" />
+  <title>KidClient — Design Studio &amp; AI Game Arcade (Client: Age 4)</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --accent: #38bdf8;
-      --yellow: #facc15;
-      --green: #22c55e;
-      --pink: #ec4899;
-      --text: #f8fafc;
-      --muted: #94a3b8;
+      --paper: #F7F5EE;
+      --paper-warm: #EFECE1;
+      --grid-line: rgba(28, 30, 33, 0.08);
+      --ink: #1C1E21;
+      --muted: #52565E;
+      --blue: #1546F6;
+      --red: #F02D2D;
+      --coral: #E55B4B;
+      --yellow: #F6C945;
+      --green: #2E8B57;
+      --border: 2px solid #1C1E21;
+      --shadow: 6px 6px 0 #1C1E21;
+      --shadow-sm: 4px 4px 0 #1C1E21;
     }
+
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: radial-gradient(circle at top, #1e293b 0%, #0f172a 70%);
-      color: var(--text); line-height: 1.6;
+      margin: 0;
+      font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image:
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 32px 32px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
-    .container { max-width: 1120px; margin: 0 auto; padding: 24px; }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .hand { font-family: 'Caveat', cursive; }
+
+    /* Swiss Registration Bar */
+    .spec-strip {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .spec-strip span strong { color: var(--yellow); }
+
+    .container { max-width: 1180px; margin: 0 auto; padding: 24px 24px 80px; }
+
+    /* Navigation Header */
     header {
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
-      gap: 16px; padding: 12px 0 32px; border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0 24px;
+      border-bottom: 2px solid var(--ink);
     }
     .brand {
-      display: flex; align-items: center; gap: 14px; font-size: 26px; font-weight: 900;
-      color: #fff; text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
     }
-    .brand-logo {
-      height: 56px; width: auto; display: block;
-      filter: drop-shadow(0 4px 12px rgba(56, 189, 248, 0.25));
-      transition: transform 0.2s;
+    .brand img.avatar-chip {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      border: 2px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      object-fit: cover;
     }
-    .brand:hover .brand-logo { transform: scale(1.03); }
-    .hero-mascot {
-      width: 136px; height: 136px; border-radius: 32px; margin: 0 auto 20px;
-      display: block; box-shadow: 0 14px 35px rgba(56, 189, 248, 0.35);
-      border: 2px solid rgba(56, 189, 248, 0.5);
-    }
-    .nav-links { display: flex; flex-wrap: wrap; gap: 12px; }
+    .brand img.wordmark { height: 46px; width: auto; display: block; }
+
+    .nav-links { display: flex; flex-wrap: wrap; gap: 10px; }
     .nav-links a {
-      color: var(--text); text-decoration: none; font-weight: 700;
-      padding: 8px 16px; border-radius: 999px; background: rgba(255,255,255,0.08);
-      transition: background 0.2s, transform 0.15s;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 9px 14px;
+      background: #fff;
+      border: var(--border);
+      border-radius: 10px;
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
     }
-    .nav-links a:hover { background: rgba(56, 189, 248, 0.25); transform: translateY(-2px); }
+    .nav-links a:hover {
+      background: var(--yellow);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .nav-links a:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--ink);
+    }
+
+    /* Hero Editorial Grid */
     .hero {
-      text-align: center; padding: 48px 16px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 36px;
+      align-items: center;
+      padding: 48px 0 56px;
+      border-bottom: 2px solid var(--ink);
+      position: relative;
     }
-    .badge {
-      display: inline-block; background: rgba(250, 204, 21, 0.15); color: var(--yellow);
-      border: 1px solid rgba(250, 204, 21, 0.4); padding: 6px 16px; border-radius: 999px;
-      font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;
-      margin-bottom: 16px;
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 32px 0 40px; }
     }
+
+    .brief-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--paper-warm);
+      border: 2px solid var(--ink);
+      padding: 5px 12px;
+      margin-bottom: 18px;
+    }
+    .brief-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--red); display: inline-block;
+    }
+
     h1 {
-      font-size: clamp(34px, 5vw, 58px); line-height: 1.1; margin: 0 0 20px;
-      font-weight: 900; letter-spacing: -0.02em;
+      font-size: clamp(38px, 5.2vw, 64px);
+      line-height: 1.03;
+      margin: 0 0 20px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
     }
-    h1 span {
-      background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    .highlight-kid {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+      padding: 0 6px;
     }
+    .highlight-kid::before {
+      content: "";
+      position: absolute;
+      left: -4px; right: -4px; bottom: 4px; top: 10%;
+      background: var(--yellow);
+      z-index: -1;
+      transform: rotate(-1.2deg);
+      border-radius: 6px;
+    }
+    .underline-blue {
+      text-decoration: none;
+      border-bottom: 6px solid var(--blue);
+    }
+
     .subtitle {
-      font-size: clamp(18px, 2.2vw, 22px); color: var(--muted);
-      max-width: 740px; margin: 0 auto 32px;
+      font-size: 19px;
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 0 28px;
     }
-    .cta-row {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;
-    }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
     .btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 14px 28px; border-radius: 999px; font-size: 18px; font-weight: 800;
-      text-decoration: none; transition: transform 0.15s, box-shadow 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 26px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 800;
+      text-decoration: none;
+      border: 2.5px solid var(--ink);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s;
     }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-primary {
-      background: linear-gradient(135deg, #38bdf8, #6366f1); color: #fff;
-      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.35);
+    .btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--ink); }
+    .btn:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--ink); }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-yellow { background: var(--yellow); color: var(--ink); }
+    .btn-white { background: #fff; color: var(--ink); }
+
+    /* Hero Right: Tactile Studio Board + Sticky Note + Clay Mascot */
+    .hero-visual {
+      position: relative;
+      padding: 16px;
+      background: #fff;
+      border: 2.5px solid var(--ink);
+      box-shadow: 10px 10px 0 var(--ink);
+      border-radius: 18px;
     }
-    .btn-secondary {
-      background: var(--card); color: #fff; border: 2px solid rgba(255,255,255,0.2);
+    .hero-visual-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 2px solid var(--ink);
     }
-    .section-title {
-      font-size: 28px; font-weight: 900; margin: 48px 0 8px;
-      display: flex; align-items: center; gap: 10px;
+    .swatch-row { display: flex; gap: 6px; }
+    .swatch { width: 14px; height: 14px; border: 1.5px solid var(--ink); border-radius: 3px; }
+    .hero-board-img {
+      width: 100%;
+      border-radius: 10px;
+      border: 2px solid var(--ink);
+      display: block;
     }
-    .section-sub { color: var(--muted); margin: 0 0 24px; }
+    .stamp-approved {
+      position: absolute;
+      top: -18px;
+      right: -14px;
+      background: var(--paper);
+      color: var(--coral);
+      border: 3px solid var(--coral);
+      border-radius: 10px;
+      padding: 6px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      transform: rotate(7deg);
+      box-shadow: 3px 3px 0 rgba(229, 91, 75, 0.25);
+    }
+    .sticky-note {
+      position: absolute;
+      bottom: -24px;
+      left: -18px;
+      background: var(--red);
+      color: #fff;
+      padding: 14px 18px;
+      width: 215px;
+      border: 2px solid var(--ink);
+      box-shadow: 5px 5px 0 var(--ink);
+      transform: rotate(-3.5deg);
+      z-index: 4;
+    }
+    .sticky-note::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 56px;
+      height: 18px;
+      background: rgba(247, 245, 238, 0.85);
+      border: 1.5px solid rgba(28, 30, 33, 0.35);
+    }
+    .sticky-note .hand {
+      font-size: 24px;
+      line-height: 1.05;
+      display: block;
+    }
+    .clay-badge-float {
+      position: absolute;
+      bottom: -26px;
+      right: 16px;
+      width: 98px;
+      height: 98px;
+      border-radius: 22px;
+      border: 3px solid var(--ink);
+      box-shadow: 5px 5px 0 var(--ink);
+      object-fit: cover;
+      transform: rotate(4deg);
+      background: var(--yellow);
+    }
+    @media (max-width: 600px) {
+      .sticky-note { position: static; width: 100%; transform: none; margin-top: 14px; }
+      .clay-badge-float { width: 76px; height: 76px; bottom: 12px; right: 12px; }
+      .stamp-approved { top: -12px; right: 8px; }
+    }
+
+    /* Section Headers */
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin: 56px 0 24px;
+    }
+    .section-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--blue);
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      display: block;
+    }
+    h2 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      margin: 0;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+    }
+    .section-note {
+      font-family: 'Caveat', cursive;
+      font-size: 26px;
+      color: var(--coral);
+      transform: rotate(-1.5deg);
+    }
+
+    /* Arcade Cards */
     .grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
       gap: 24px;
     }
     .card {
-      background: var(--card); border-radius: 24px; padding: 28px;
-      border: 2px solid rgba(255,255,255,0.08);
-      display: flex; flex-direction: column; justify-content: space-between;
-      transition: transform 0.2s, border-color 0.2s;
+      background: #fff;
+      border: 2.5px solid var(--ink);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s, box-shadow 0.15s;
     }
-    .card:hover { transform: translateY(-4px); border-color: var(--accent); }
-    .card-emoji { font-size: 52px; margin-bottom: 12px; }
-    .card h3 { margin: 0 0 10px; font-size: 22px; }
-    .card p { color: var(--muted); margin: 0 0 20px; font-size: 16px; }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 var(--ink);
+    }
+    .card-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 18px;
+      border-bottom: 2px solid var(--ink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .bar-a { background: var(--yellow); }
+    .bar-b { background: #93C5FD; }
+    .bar-c { background: #FDBA74; }
+
+    .card-thumb {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      border-bottom: 2px solid var(--ink);
+      display: block;
+      background: var(--paper-warm);
+    }
+    .card-body { padding: 22px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .card h3 { margin: 0 0 8px; font-size: 24px; letter-spacing: -0.02em; }
+    .card p { color: var(--muted); margin: 0 0 18px; font-size: 15.5px; }
+
+    .card-actions { display: flex; flex-direction: column; gap: 10px; }
     .play-btn {
-      display: inline-block; text-align: center; padding: 12px 20px;
-      border-radius: 14px; font-weight: 800; text-decoration: none;
-      background: var(--green); color: #052e16; font-size: 17px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 16px;
+      text-decoration: none;
+      border: 2px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      background: var(--green);
+      color: #fff;
+      transition: transform 0.1s, box-shadow 0.1s;
     }
-    .steps {
-      background: rgba(30, 41, 59, 0.6); border-radius: 24px; padding: 32px;
-      border: 1px solid rgba(255,255,255,0.1); margin-top: 48px;
+    .play-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+    .play-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+    .play-btn.secondary { background: var(--paper); color: var(--ink); }
+
+    /* Swiss Pantone + Process Spec Sheet */
+    .spec-sheet {
+      margin-top: 64px;
+      background: #fff;
+      border: 2.5px solid var(--ink);
+      border-radius: 22px;
+      box-shadow: 8px 8px 0 var(--ink);
+      overflow: hidden;
     }
+    .spec-sheet-head {
+      background: var(--paper-warm);
+      padding: 16px 24px;
+      border-bottom: 2px solid var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .spec-cols {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .spec-col {
+      padding: 26px 24px;
+      border-right: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    .spec-col:last-child { border-right: none; }
+    .step-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--blue);
+      line-height: 1;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .spec-col h3 { margin: 0 0 8px; font-size: 20px; }
+    .spec-col p { margin: 0; color: var(--muted); font-size: 15px; }
+    .spec-col code {
+      background: var(--paper-warm);
+      border: 1.5px solid var(--ink);
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    /* Clay Toybox Showcase Strip */
+    .studio-feature {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: center;
+      background: var(--paper-warm);
+      border: 2.5px solid var(--ink);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+    @media (max-width: 820px) { .studio-feature { grid-template-columns: 1fr; } }
+    .studio-feature img {
+      width: 100%;
+      border-radius: 14px;
+      border: 2px solid var(--ink);
+      display: block;
+    }
+
     footer {
-      text-align: center; padding: 48px 16px 24px; color: var(--muted);
-      border-top: 1px solid rgba(255,255,255,0.08); margin-top: 64px;
+      margin-top: 72px;
+      padding-top: 28px;
+      border-top: 2px solid var(--ink);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--muted);
     }
+    footer a { color: var(--ink); font-weight: 700; }
   </style>
 </head>
 <body>
+  <div class="spec-strip">
+    <span><strong>STUDIO SPEC // 001</strong> — KIDCLIENT CREATIVE AGENCY</span>
+    <span>CLIENT: <strong>AGE 4</strong> &nbsp;|&nbsp; CONSULTANT: <strong>DAD + AI</strong> &nbsp;|&nbsp; STATUS: <strong>APPROVED BY THE 4YO</strong></span>
+  </div>
+
   <div class="container">
     <header>
       <a href="/" class="brand" aria-label="KidClient Home">
-        <img src="/logo.svg" alt="KidClient — Tiny Creative Director • AI Game Studio" class="brand-logo" />
+        <img src="/assets/brand/clay-dino-avatar.jpg" alt="KidClient Clay Dino Boss" class="avatar-chip" />
+        <img src="/logo.svg" alt="KidClient" class="wordmark" />
       </a>
       <nav class="nav-links">
-        <a href="https://youtube.com/@kidclient" target="_blank" rel="noopener">📺 YouTube</a>
-        <a href="https://github.com/kidclient/kidclient" target="_blank" rel="noopener">💻 GitHub & .md Kit</a>
-        <a href="https://kidclient.itch.io" target="_blank" rel="noopener">🎮 Itch.io</a>
-        <a href="https://gamejolt.com/@kidclient" target="_blank" rel="noopener">⚡ Game Jolt</a>
+        <a href="https://youtube.com/@kidclient" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://github.com/kidclient/kidclient" target="_blank" rel="noopener">GitHub .MD Kit</a>
+        <a href="https://kidclient.itch.io" target="_blank" rel="noopener">Itch.io</a>
+        <a href="https://gamejolt.com/@kidclient" target="_blank" rel="noopener">Game Jolt</a>
       </nav>
     </header>
 
     <section class="hero">
-      <img src="/icon-512.png" alt="KidClient Tiny Dino Boss Mascot" class="hero-mascot" />
-      <div class="badge">👔 Parent Consultant + 🧒 4-Year-Old Client</div>
-      <h1>Turn Tablet Time Into<br /><span>AI Game Creation Together</span></h1>
-      <p class="subtitle">
-        My 4-year-old pitches the wild game ideas. I act as the AI Consultant. Together we build playable 3D &amp; 2D tablet games—and share every prompt, `.md` template, and lesson so you can do it with your kid for $0.
-      </p>
-      <div class="cta-row">
-        <a href="#arcade" class="btn btn-primary">🕹️ Play the Starter Arcade</a>
-        <a href="/tutorials/path-a-shark-truck/" class="btn btn-secondary">🎬 Watch Episode 1 Tutorial &amp; Guide</a>
+      <div>
+        <div class="brief-label">
+          <span class="brief-dot"></span>
+          <span>Design Brief #01 &middot; Offline iPad &amp; Web Arcade</span>
+        </div>
+        <h1>
+          My 4-Year-Old Is the <span class="highlight-kid">Client.</span><br />
+          I&rsquo;m the <span class="underline-blue">AI Consultant.</span>
+        </h1>
+        <p class="subtitle">
+          We flipped screen time into a real tiny design studio. My 4-year-old dictates chaotic game specs, we build playable 3D &amp; 2D tablet toys with AI, and share every <strong>.md prompt kit</strong> so any parent can build with their kid for $0.
+        </p>
+        <div class="cta-row">
+          <a href="#arcade" class="btn btn-primary">Play the Starter Games</a>
+          <a href="/tutorials/path-a-shark-truck/" class="btn btn-yellow">Episode 01 Build Guide</a>
+          <a href="https://github.com/kidclient/kidclient" target="_blank" rel="noopener" class="btn btn-white">Free .MD Kit</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="stamp-approved">APPROVED BY THE 4YO</div>
+        <div class="hero-visual-header">
+          <span>FIG 1.0 // CRAYON SPEC TO REALITY</span>
+          <div class="swatch-row">
+            <span class="swatch" style="background:#1546F6"></span>
+            <span class="swatch" style="background:#F02D2D"></span>
+            <span class="swatch" style="background:#F6C945"></span>
+            <span class="swatch" style="background:#2E8B57"></span>
+          </div>
+        </div>
+        <img src="/assets/brand/agency-brief-board.jpg" alt="KidClient Swiss Design Brief Hijacked by 4yo Shark Truck Crayon Drawing" class="hero-board-img" />
+        <div class="sticky-note">
+          <span class="hand">URGENT CLIENT FEEDBACK: Needs more pancakes &amp; NO losing!! :)</span>
+        </div>
+        <img src="/assets/brand/clay-dino-avatar.jpg" alt="Clay Dino Creative Director" class="clay-badge-float" />
       </div>
     </section>
 
-    <div id="arcade">
-      <h2 class="section-title">🎮 Playable Tablet-Ready Starter Templates</h2>
-      <p class="section-sub">Open on your iPad, phone, or laptop! Tap <strong>"Add to Home Screen"</strong> on any tablet to play full-screen &amp; 100% offline.</p>
+    <section id="arcade">
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">Deliverables // Playable Tablet Prototypes</span>
+          <h2>The Starter Game Arcade</h2>
+        </div>
+        <span class="section-note">&ldquo;Tap Share &rarr; Add to Home Screen on iPad for offline play!&rdquo;</span>
+      </div>
 
       <div class="grid">
-        <div class="card">
-          <div>
-            <div class="card-emoji">🦈🛻</div>
-            <h3>Path A: 3D Shark-Truck Island</h3>
-            <p>Built in a single file with <strong>Three.js</strong>. Features our KidClient 3D Stadium Archway, knock-over voxel block towers, floating ice cream cones, and the iconic Red <strong>SILLY BUTTON</strong>!</p>
+        <article class="card">
+          <div class="card-top-bar bar-a">
+            <span>BRIEF #01 // 3D THREE.JS</span>
+            <span>IPAD + KEYBOARD</span>
           </div>
-          <div style="display:flex; flex-direction:column; gap:10px;">
-            <a href="/templates/3d-threejs/" class="play-btn">▶️ Play 3D Shark-Truck</a>
-            <a href="/tutorials/path-a-shark-truck/" class="play-btn" style="background:rgba(56,189,248,0.18); color:#38bdf8; border:2px solid rgba(56,189,248,0.45);">🎬 Watch Tutorial &amp; Prompts</a>
+          <img src="/assets/brand/crayon-shark-truck.jpg" alt="Crayon drawing of Shark Monster Truck on rainbow ramp" class="card-thumb" />
+          <div class="card-body">
+            <div>
+              <h3>Path A: 3D Shark-Truck Island</h3>
+              <p>A tactile clay-style 3D monster truck with a shark fin, floating ice cream cones, knock-over wooden block towers, rainbow ramps, and a chunky red <strong>SILLY BUTTON</strong> that blasts pancakes.</p>
+            </div>
+            <div class="card-actions">
+              <a href="/templates/3d-threejs/" class="play-btn">Play 3D Shark-Truck</a>
+              <a href="/tutorials/path-a-shark-truck/" class="play-btn secondary">Watch Guide &amp; Copy Prompts</a>
+            </div>
           </div>
-        </div>
+        </article>
 
-        <div class="card">
-          <div>
-            <div class="card-emoji">🦖⭐</div>
-            <h3>Path B: 2D Bouncy Dino Party</h3>
-            <p>Built with <strong>HTML5 Canvas</strong>. Zero external image files! Big touch arrows, costume-changing Silly Button, particle bursts, and offline high-score saving.</p>
+        <article class="card">
+          <div class="card-top-bar bar-b">
+            <span>BRIEF #02 // 2D CANVAS</span>
+            <span>ZERO ASSETS</span>
           </div>
-          <a href="/templates/2d-arcade/" class="play-btn">▶️ Play 2D Starter</a>
-        </div>
+          <img src="/assets/brand/clay-studio-desk.jpg" alt="Clay Dino Boss and graph paper monster truck sketch" class="card-thumb" />
+          <div class="card-body">
+            <div>
+              <h3>Path B: Clay Dino Star Bounce</h3>
+              <p>Play as our handmade Clay Dino Boss on warm graph paper! Bouncy drafting-pad trampolines, chunky tactile buttons, silly hat swaps, and offline high-score saving.</p>
+            </div>
+            <div class="card-actions">
+              <a href="/templates/2d-arcade/" class="play-btn">Play 2D Dino Bounce</a>
+            </div>
+          </div>
+        </article>
 
-        <div class="card">
-          <div>
-            <div class="card-emoji">🗣️🌈</div>
-            <h3>Path C: Talking Sticker Story Toy</h3>
-            <p>Built for pre-readers using the browser's free <strong>Web Speech API</strong>. Stamps talking dinosaurs, rockets, and rainbows and narrates a story out loud!</p>
+        <article class="card">
+          <div class="card-top-bar bar-c">
+            <span>BRIEF #03 // WEB SPEECH API</span>
+            <span>PRE-READER FRIENDLY</span>
           </div>
-          <a href="/templates/voice-story-toy/" class="play-btn">▶️ Play Voice Starter</a>
+          <img src="/assets/brand/toybox-board.jpg" alt="KidClient Tactile Toybox Workbench with clay blocks and arcade controller" class="card-thumb" />
+          <div class="card-body">
+            <div>
+              <h3>Path C: Talking Sticker Sketchpad</h3>
+              <p>Built for 3-to-5-year-olds who can&rsquo;t read yet. Stamp Clay Dino, Shark-Trucks, and rainbow crayons onto graph paper and press one button to hear your story read aloud for $0.</p>
+            </div>
+            <div class="card-actions">
+              <a href="/templates/voice-story-toy/" class="play-btn">Open Sticker Sketchpad</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="spec-sheet">
+      <div class="spec-sheet-head">
+        <div>
+          <span class="mono" style="font-size:12px; font-weight:800; color:var(--red);">SOP // STANDARD OPERATING PROCEDURE</span>
+          <h2 style="font-size:26px; margin-top:2px;">How Any Parent Runs a 10-Minute KidClient Session</h2>
+        </div>
+        <a href="https://github.com/kidclient/kidclient" target="_blank" rel="noopener" class="btn btn-yellow" style="padding:10px 18px; font-size:14px;">Download All .MD Files</a>
+      </div>
+      <div class="spec-cols">
+        <div class="spec-col">
+          <span class="step-num">01</span>
+          <h3>5-Min Client Intake</h3>
+          <p>Use <code>CLIENT_BRIEF_TEMPLATE.md</code> to ask 4 quick questions: Hero, Goal, Bouncy No-Losing Rule, and what the Big Red Silly Button does.</p>
+        </div>
+        <div class="spec-col">
+          <span class="step-num">02</span>
+          <h3>Paste System Prompt</h3>
+          <p>Drop <code>KID_GAME_SYSTEM_PROMPT.md</code> into free Claude, ChatGPT, or Gemini. It enforces single-file HTML5, iPad thumbsticks, and synth audio.</p>
+        </div>
+        <div class="spec-col">
+          <span class="step-num">03</span>
+          <h3>Catch AI Bugs Together</h3>
+          <p>When AI puts tires on the roof, don&rsquo;t hide it—laugh together! Your child learns AI predicts patterns and needs a human boss.</p>
+        </div>
+        <div class="spec-col">
+          <span class="step-num">04</span>
+          <h3>Ship to the iPad ($0)</h3>
+          <p>Follow <code>FREE_STACK_CHEATSHEET.md</code> to drag-and-drop onto Cloudflare for free, tap <em>Add to Home Screen</em>, and play offline on airplanes.</p>
         </div>
       </div>
-    </div>
+    </section>
 
-    <section class="steps">
-      <h2 style="margin-top:0">📋 The 4-Step Parent &amp; Kid Workflow</h2>
-      <div class="grid">
-        <div>
-          <h3>1. The 5-Min Client Pitch</h3>
-          <p>Ask your child 4 questions from our <code>CONSULTANT_PLAYBOOK.md</code>: Who is the hero? What do we collect? What does the Silly Button do?</p>
-        </div>
-        <div>
-          <h3>2. Drop in the System Prompt</h3>
-          <p>Paste <code>KID_GAME_SYSTEM_PROMPT.md</code> into free Claude, ChatGPT, or Gemini so it automatically adds iPad touch controls &amp; synth sounds.</p>
-        </div>
-        <div>
-          <h3>3. Catch AI Mistakes Together</h3>
-          <p>When the AI puts monster truck wheels on the roof, laugh together and let your kid direct the fix—teaching real AI literacy!</p>
+    <section class="studio-feature">
+      <div>
+        <span class="section-kicker">Studio Philosophy // Tactile + Transparent</span>
+        <h2 style="margin-bottom:12px;">Handmade Toybox Energy.<br/>Zero &ldquo;AI Slop.&rdquo;</h2>
+        <p style="color:var(--muted); margin:0 0 20px; font-size:16px;">
+          Our goal isn&rsquo;t to hand a toddler an algorithm—it&rsquo;s to hand them a crayon, a cardboard crown, and a parent who helps turn their wildest ideas into working software they can test, break, and rebuild.
+        </p>
+        <div class="cta-row">
+          <a href="/tutorials/path-a-shark-truck/" class="btn btn-primary" style="padding:12px 20px; font-size:15px;">Read Episode 01 Playbook</a>
+          <a href="/brand-preview/" class="btn btn-white" style="padding:12px 20px; font-size:15px;">View Brand Style Sheet</a>
         </div>
       </div>
+      <img src="/assets/brand/toybox-board.jpg" alt="KidClient Tactile Clay & Wood Studio Flat-Lay" />
     </section>
 
     <footer>
-      <p>Built with ❤️ by <strong>KidClient</strong> (<a href="https://youtube.com/@kidclient" style="color:var(--accent)">@kidclient</a>) • Open Source for Parents Everywhere</p>
+      <div><strong>KIDCLIENT STUDIO</strong> // CLIENT: AGE 4 // OPEN SOURCE FOR PARENTS</div>
+      <div>
+        <a href="https://youtube.com/@kidclient" target="_blank" rel="noopener">@kidclient</a> &middot;
+        <a href="https://github.com/kidclient/kidclient" target="_blank" rel="noopener">GitHub</a> &middot;
+        <a href="https://kidclient.itch.io" target="_blank" rel="noopener">Itch.io</a> &middot;
+        <a href="https://gamejolt.com/@kidclient" target="_blank" rel="noopener">Game Jolt</a>
+      </div>
     </footer>
   </div>
   <script src="/shared/kidclient-shell.js"></script>

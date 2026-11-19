@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kidclient-arcade-v3';
+const CACHE_NAME = 'kidclient-arcade-v4';
 const CORE_ASSETS = [
   '/',
   '/manifest.json',
@@ -7,9 +7,11 @@ const CORE_ASSETS = [
   '/icon-192.png',
   '/icon-512.png',
   '/apple-touch-icon.png',
-  '/assets/brand/kidclient-avatar.png',
-  '/assets/brand/kidclient-logo-3d.png',
-  '/assets/brand/kidclient-banner.png',
+  '/assets/brand/clay-dino-avatar.jpg',
+  '/assets/brand/agency-brief-board.jpg',
+  '/assets/brand/toybox-board.jpg',
+  '/assets/brand/crayon-shark-truck.jpg',
+  '/assets/brand/clay-studio-desk.jpg',
   '/shared/kidclient-shell.js',
   '/templates/3d-threejs/',
   '/templates/2d-arcade/',
@@ -36,7 +38,6 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  // Network-first for HTML navigation so redirected /index.html responses are never served stale
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request, { redirect: 'follow' })

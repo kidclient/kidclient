@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KidClient Brand Style Picker — 4 Directions</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #111318; color: #f4f4f5; line-height: 1.5;
+    }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 32px 24px 80px; }
+    header { margin-bottom: 36px; border-bottom: 1px solid #27272a; padding-bottom: 20px; }
+    h1 { margin: 0 0 8px; font-size: clamp(26px, 4vw, 40px); letter-spacing: -0.02em; }
+    .sub { color: #a1a1aa; margin: 0; font-size: 16px; }
+    .direction {
+      background: #18181b; border: 1px solid #27272a; border-radius: 24px;
+      padding: 28px; margin-bottom: 36px;
+    }
+    .dir-head {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
+      gap: 12px; margin-bottom: 16px;
+    }
+    .tag {
+      font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      background: #27272a; color: #facc15; padding: 5px 12px; border-radius: 999px;
+    }
+    h2 { margin: 8px 0 4px; font-size: 26px; }
+    .desc { color: #a1a1aa; margin: 0 0 20px; max-width: 820px; font-size: 15px; }
+    .media-grid {
+      display: grid; grid-template-columns: 2.35fr 1fr; gap: 20px; align-items: start;
+    }
+    @media (max-width: 820px) { .media-grid { grid-template-columns: 1fr; } }
+    .img-card {
+      background: #09090b; border: 1px solid #27272a; border-radius: 16px; overflow: hidden;
+    }
+    .img-card img { width: 100%; display: block; height: auto; cursor: zoom-in; }
+    .caption {
+      padding: 10px 14px; font-size: 13px; color: #a1a1aa; display: flex;
+      justify-content: space-between; align-items: center;
+    }
+    .circle-preview {
+      display: flex; align-items: center; gap: 14px; margin-top: 14px;
+      background: #09090b; border: 1px solid #27272a; border-radius: 14px; padding: 12px 16px;
+    }
+    .circle-preview img.sm { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
+    .circle-preview img.xs { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+    .circle-meta { font-size: 13px; color: #a1a1aa; }
+    .circle-meta strong { color: #fff; display: block; font-size: 14px; }
+    /* Lightbox */
+    #lightbox {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none;
+      align-items: center; justify-content: center; z-index: 999; padding: 24px; cursor: zoom-out;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 96vw; max-height: 92vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>🎨 KidClient Brand Style Picker</h1>
+      <p class="sub">4 distinct, non-generic brand directions. Click any image to view full-screen. Tell me which one you want (or which elements to combine)!</p>
+    </header>
+
+    <section class="direction">
+      <span class="tag">Direction 1</span>
+      <h2>Tactile Toybox / Claymation Studio</h2>
+      <p class="desc">Aardman / Yoshi's Crafted World / Playdate warmth. Birch workbench, painted wooden letter blocks, matte polymer clay dino in a cardboard crown &amp; blue tie, stamped "APPROVED BY THE 4YO" badge, and physical arcade hardware. Deeply human &amp; handmade.</p>
+      <div class="media-grid">
+        <div class="img-card">
+          <img src="/brand-preview/dir1-board.jpg" alt="Direction 1 Brand Board" onclick="openLB(this.src)" />
+          <div class="caption"><span>16:9 Brand Concept Board</span><span>Click to zoom</span></div>
+        </div>
+        <div>
+          <div class="img-card">
+            <img src="/brand-preview/dir1-avatar.jpg" alt="Direction 1 Avatar" onclick="openLB(this.src)" />
+            <div class="caption"><span>1:1 Social / App Icon</span></div>
+          </div>
+          <div class="circle-preview">
+            <img class="sm" src="/brand-preview/dir1-avatar.jpg" alt="YouTube crop" />
+            <img class="xs" src="/brand-preview/dir1-avatar.jpg" alt="Small crop" />
+            <div class="circle-meta"><strong>@kidclient</strong>YouTube / X circular crop test</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="direction">
+      <span class="tag">Direction 2</span>
+      <h2>Swiss Agency Hijacked by a 4-Year-Old</h2>
+      <p class="desc">Pentagram / Teenage Engineering editorial spec sheet attacked by waxy kid crayons, gold-foil star stickers, and a taped red "URGENT CLIENT FEEDBACK" sticky note. Razor-sharp wit that immediately communicates the entire premise of the channel.</p>
+      <div class="media-grid">
+        <div class="img-card">
+          <img src="/brand-preview/dir2-board.jpg" alt="Direction 2 Brand Board" onclick="openLB(this.src)" />
+          <div class="caption"><span>16:9 Brand Concept Board</span><span>Click to zoom</span></div>
+        </div>
+        <div>
+          <div class="img-card">
+            <img src="/brand-preview/dir2-avatar.jpg" alt="Direction 2 Avatar" onclick="openLB(this.src)" />
+            <div class="caption"><span>1:1 Social / App Icon</span></div>
+          </div>
+          <div class="circle-preview">
+            <img class="sm" src="/brand-preview/dir2-avatar.jpg" alt="YouTube crop" />
+            <img class="xs" src="/brand-preview/dir2-avatar.jpg" alt="Small crop" />
+            <div class="circle-meta"><strong>@kidclient</strong>YouTube / X circular crop test</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="direction">
+      <span class="tag">Direction 3</span>
+      <h2>Retro Saturday-Morning Arcade &amp; Zine</h2>
+      <p class="desc">90s Nintendo Power / Comic manual charm. Bold ink outlines, halftone dots, warm newsprint cream, and expressive 2D characters: the 4yo Boss in shades &amp; dad's tie pointing from a "BOSS" cardboard box beside a frazzled dad consultant with coffee.</p>
+      <div class="media-grid">
+        <div class="img-card">
+          <img src="/brand-preview/dir3-board.jpg" alt="Direction 3 Brand Board" onclick="openLB(this.src)" />
+          <div class="caption"><span>16:9 Brand Concept Board</span><span>Click to zoom</span></div>
+        </div>
+        <div>
+          <div class="img-card">
+            <img src="/brand-preview/dir3-avatar.jpg" alt="Direction 3 Avatar" onclick="openLB(this.src)" />
+            <div class="caption"><span>1:1 Social / App Icon</span></div>
+          </div>
+          <div class="circle-preview">
+            <img class="sm" src="/brand-preview/dir3-avatar.jpg" alt="YouTube crop" />
+            <img class="xs" src="/brand-preview/dir3-avatar.jpg" alt="Small crop" />
+            <div class="circle-meta"><strong>@kidclient</strong>YouTube / X circular crop test</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="direction">
+      <span class="tag">Direction 4</span>
+      <h2>Blueprint Workshop / Maker Lab</h2>
+      <p class="desc">Mark Rober / LEGO Technic instruction manual meets kid-dictated absurdity. Crisp cobalt blueprint grids + deadpan isometric cutaway diagrams ("SHARK-TRUCK MK. IV", "PANCAKE LAUNCHER", "NO LOSING ALLOWED"). High STEM credibility for parents + awesome printable posters.</p>
+      <div class="media-grid">
+        <div class="img-card">
+          <img src="/brand-preview/dir4-board.jpg" alt="Direction 4 Brand Board" onclick="openLB(this.src)" />
+          <div class="caption"><span>16:9 Brand Concept Board</span><span>Click to zoom</span></div>
+        </div>
+        <div>
+          <div class="img-card">
+            <img src="/brand-preview/dir4-avatar.jpg" alt="Direction 4 Avatar" onclick="openLB(this.src)" />
+            <div class="caption"><span>1:1 Social / App Icon</span></div>
+          </div>
+          <div class="circle-preview">
+            <img class="sm" src="/brand-preview/dir4-avatar.jpg" alt="YouTube crop" />
+            <img class="xs" src="/brand-preview/dir4-avatar.jpg" alt="Small crop" />
+            <div class="circle-meta"><strong>@kidclient</strong>YouTube / X circular crop test</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="lightbox" onclick="this.classList.remove('open')">
+    <img id="lb-img" src="" alt="Full preview" />
+  </div>
+  <script>
+    function openLB(src) {
+      document.getElementById('lb-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+  </script>
+</body>
+</html>

@@ -6,57 +6,64 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-  <title>Path A: 3D Shark-Truck Island | KidClient Arcade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=JetBrains+Mono:wght@700;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet" />
+  <title>Brief #01: 3D Shark-Truck Island | KidClient</title>
   <style>
     * { box-sizing: border-box; }
     html, body {
       margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
-      background: #0f172a; font-family: system-ui, -apple-system, sans-serif;
+      background: #F7F5EE; font-family: 'Space Grotesk', system-ui, sans-serif;
       touch-action: none; user-select: none; -webkit-user-select: none; overscroll-behavior: none;
     }
-    /* Branded KidClient Splash Overlay */
+
+    /* Swiss Agency + Clay Toybox Splash Brief Card */
     #splash {
       position: fixed; inset: 0; z-index: 100;
-      background: radial-gradient(circle at center, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.96) 100%);
-      backdrop-filter: blur(10px);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 24px; text-align: center; color: #fff;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
+      background-color: rgba(247, 245, 238, 0.94);
+      background-image:
+        linear-gradient(to right, rgba(28,30,33,0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(28,30,33,0.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px; transition: opacity 0.35s ease, visibility 0.35s ease;
     }
     #splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    .splash-card {
-      background: linear-gradient(145deg, #1e293b, #0f172a);
-      border: 3px solid rgba(56, 189, 248, 0.6);
-      border-radius: 32px; padding: 28px 36px; max-width: 540px; width: 100%;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(56, 189, 248, 0.25);
+
+    .brief-card {
+      background: #fff; color: #1C1E21;
+      border: 3px solid #1C1E21; border-radius: 22px;
+      box-shadow: 10px 10px 0 #1C1E21;
+      max-width: 560px; width: 100%; overflow: hidden; position: relative;
     }
-    .splash-logo {
-      width: 220px; height: auto; border-radius: 20px; margin-bottom: 12px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    .brief-top {
+      background: #F6C945; border-bottom: 3px solid #1C1E21;
+      padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 800;
     }
-    .splash-badge {
-      display: inline-block; background: rgba(250, 204, 21, 0.2); color: #facc15;
-      border: 1px solid rgba(250, 204, 21, 0.5); padding: 4px 14px; border-radius: 999px;
-      font-size: 13px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px;
+    .brief-body { padding: 24px 26px 28px; text-align: left; }
+    .brief-row { display: flex; gap: 18px; align-items: center; margin-bottom: 16px; }
+    .brief-avatar {
+      width: 84px; height: 84px; border-radius: 18px;
+      border: 3px solid #1C1E21; box-shadow: 4px 4px 0 #1C1E21;
+      object-fit: cover; flex-shrink: 0;
     }
-    .splash-card h1 {
-      margin: 4px 0 10px; font-size: clamp(26px, 4vw, 36px); font-weight: 900;
-      background: linear-gradient(135deg, #38bdf8, #facc15, #ec4899);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .splash-card p {
-      color: #cbd5e1; font-size: 16px; margin: 0 0 20px; line-height: 1.45;
+    .brief-body h1 { margin: 0 0 4px; font-size: clamp(24px, 4vw, 32px); line-height: 1.05; }
+    .brief-sub { font-family: 'Caveat', cursive; font-size: 24px; color: #E55B4B; margin: 0; }
+    .spec-box {
+      background: #F7F5EE; border: 2px solid #1C1E21; border-radius: 12px;
+      padding: 12px 16px; margin-bottom: 20px; font-size: 15px; line-height: 1.45;
     }
     .start-btn {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #fff; border: 4px solid #fff; border-radius: 999px;
-      padding: 16px 38px; font-size: 24px; font-weight: 900;
-      cursor: pointer; box-shadow: 0 10px 25px rgba(34, 197, 94, 0.45);
-      transition: transform 0.15s; display: inline-flex; align-items: center; gap: 12px;
+      width: 100%; background: #1546F6; color: #fff;
+      border: 3px solid #1C1E21; border-radius: 14px;
+      padding: 16px 24px; font-size: 21px; font-weight: 800;
+      font-family: 'Space Grotesk', sans-serif;
+      box-shadow: 5px 5px 0 #1C1E21; cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
     }
-    .start-btn:active { transform: scale(0.94); }
+    .start-btn:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 #1C1E21; }
 
-    /* Top HUD */
+    /* Tactile Swiss Top HUD */
     #hud {
       position: fixed; top: 14px; left: 14px; right: 14px;
       display: flex; justify-content: space-between; align-items: center;
@@ -64,149 +71,158 @@
     }
     .hud-group { display: flex; align-items: center; gap: 10px; pointer-events: auto; }
     .pill {
-      background: rgba(15, 23, 42, 0.85); color: #fff;
-      backdrop-filter: blur(8px);
-      padding: 8px 16px; border-radius: 999px;
-      font-size: 20px; font-weight: 800;
-      display: flex; align-items: center; gap: 10px;
-      border: 3px solid rgba(56, 189, 248, 0.5);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      background: #F7F5EE; color: #1C1E21;
+      padding: 7px 14px; border-radius: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px; font-weight: 800;
+      display: flex; align-items: center; gap: 9px;
+      border: 2.5px solid #1C1E21;
+      box-shadow: 4px 4px 0 #1C1E21;
       text-decoration: none; cursor: pointer;
     }
     .pill img {
-      width: 34px; height: 34px; border-radius: 50%;
-      border: 2px solid #facc15;
+      width: 30px; height: 30px; border-radius: 8px;
+      border: 2px solid #1C1E21; object-fit: cover;
     }
-    .pill-guide {
-      background: linear-gradient(135deg, #6366f1, #a855f7);
-      border-color: rgba(255,255,255,0.6); font-size: 16px;
-    }
+    .pill-guide { background: #F6C945; font-size: 14px; }
 
-    /* Client Coach Bubble */
+    /* Sticky Note Client Coach */
     #coach-bar {
       position: fixed; top: 76px; left: 16px;
-      background: rgba(15, 23, 42, 0.88); color: #f8fafc;
-      border: 2px solid #facc15; border-radius: 20px;
+      background: #F6C945; color: #1C1E21;
+      border: 2.5px solid #1C1E21; border-radius: 14px;
+      box-shadow: 5px 5px 0 #1C1E21;
       padding: 8px 14px; display: flex; align-items: center; gap: 10px;
-      z-index: 12; pointer-events: none; max-width: 340px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      z-index: 12; pointer-events: none; max-width: 310px;
+      transform: rotate(-1deg);
     }
-    #coach-bar img { width: 42px; height: 42px; border-radius: 12px; }
-    #coach-text { font-size: 14px; font-weight: 700; line-height: 1.3; }
-    #coach-text strong { color: #facc15; display: block; font-size: 12px; text-transform: uppercase; }
+    #coach-bar img { width: 42px; height: 42px; border-radius: 10px; border: 2px solid #1C1E21; }
+    #coach-text { font-size: 13px; font-weight: 700; line-height: 1.25; }
+    #coach-text strong {
+      font-family: 'JetBrains Mono', monospace; color: #E55B4B;
+      display: block; font-size: 11px; text-transform: uppercase;
+    }
 
-    /* Virtual Thumbstick */
+    /* Tactile Yellow Toybox Controller Pad (Inspired by Direction 1!) */
     #stick-zone {
-      position: fixed; bottom: 26px; left: 26px;
-      width: 144px; height: 144px; border-radius: 50%;
-      background: rgba(15, 23, 42, 0.45);
-      border: 4px solid rgba(56, 189, 248, 0.7);
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+      position: fixed; bottom: 24px; left: 24px;
+      width: 144px; height: 144px; border-radius: 28px;
+      background: #F6C945;
+      border: 3.5px solid #1C1E21;
+      box-shadow: 6px 6px 0 #1C1E21;
       z-index: 20; display: flex; align-items: center; justify-content: center;
     }
+    #stick-well {
+      width: 104px; height: 104px; border-radius: 50%;
+      background: #EFECE1; border: 2.5px solid #1C1E21;
+      display: flex; align-items: center; justify-content: center;
+    }
     #stick-knob {
-      width: 66px; height: 66px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fde047, #eab308);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.45);
-      border: 4px solid #fff;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #E55B4B;
+      box-shadow: inset -4px -4px 0 rgba(0,0,0,0.18), 0 4px 8px rgba(0,0,0,0.28);
+      border: 3px solid #1C1E21;
       transition: transform 0.04s linear;
     }
 
-    /* Action Buttons (Featuring the Iconic Red "SILLY BUTTON" from the KidClient Banner!) */
+    /* Physical Arcade Buttons (Dir 1 Matte Coral + Klein Blue) */
     #action-buttons {
-      position: fixed; bottom: 26px; right: 26px;
-      display: flex; gap: 18px; align-items: center; z-index: 20;
+      position: fixed; bottom: 24px; right: 24px;
+      display: flex; gap: 16px; align-items: center; z-index: 20;
     }
     .big-btn {
-      width: 98px; height: 98px; border-radius: 50%;
-      border: 5px solid #e2e8f0;
+      width: 96px; height: 96px; border-radius: 50%;
+      border: 3.5px solid #1C1E21;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      cursor: pointer; transition: transform 0.1s;
-      color: #fff; font-weight: 900; text-align: center;
-      padding: 0;
+      cursor: pointer; transition: transform 0.08s, box-shadow 0.08s;
+      color: #fff; font-weight: 800; text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0; box-shadow: 0 7px 0 #1C1E21;
     }
-    .big-btn:active { transform: scale(0.9); }
+    .big-btn:active { transform: translateY(5px); box-shadow: 0 2px 0 #1C1E21; }
     #btn-silly {
-      width: 108px; height: 108px;
-      background: radial-gradient(circle at 35% 30%, #ff4d4d, #dc2626 65%, #991b1b 100%);
-      border: 6px solid #cbd5e1;
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.85), 0 10px 24px rgba(0,0,0,0.5), inset 0 4px 8px rgba(255,255,255,0.4);
-      font-size: 15px; line-height: 1.05; letter-spacing: 0.03em;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      width: 106px; height: 106px;
+      background: #F02D2D;
+      font-size: 13px; line-height: 1.05;
     }
     #btn-silly span.emoji { font-size: 28px; display: block; margin-bottom: 2px; }
     #btn-jump {
-      background: radial-gradient(circle at 35% 30%, #4ade80, #16a34a 70%, #14532d 100%);
-      box-shadow: 0 0 20px rgba(74, 222, 128, 0.6), 0 10px 24px rgba(0,0,0,0.45);
-      font-size: 15px; line-height: 1.1;
+      background: #2E8B57;
+      font-size: 13px; line-height: 1.1;
     }
-    #btn-jump span.emoji { font-size: 32px; display: block; margin-bottom: 2px; }
+    #btn-jump span.emoji { font-size: 28px; display: block; margin-bottom: 2px; }
 
     #toast {
-      position: fixed; top: 88px; left: 50%; transform: translateX(-50%) scale(0);
-      background: linear-gradient(135deg, #facc15, #f59e0b); color: #0f172a;
-      font-size: clamp(20px, 3.5vw, 28px); font-weight: 900;
-      padding: 12px 28px; border-radius: 999px; border: 4px solid #fff;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35); z-index: 30;
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: fixed; top: 82px; left: 50%; transform: translateX(-50%) scale(0) rotate(-1.5deg);
+      background: #F7F5EE; color: #1C1E21;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(16px, 2.8vw, 22px); font-weight: 800;
+      padding: 10px 22px; border-radius: 12px; border: 3px solid #1C1E21;
+      box-shadow: 6px 6px 0 #E55B4B; z-index: 30;
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
       pointer-events: none; white-space: nowrap;
     }
-    #toast.show { transform: translateX(-50%) scale(1); }
+    #toast.show { transform: translateX(-50%) scale(1) rotate(-1.5deg); }
 
-    @media (max-width: 640px) {
-      #coach-bar { display: none; }
-    }
+    @media (max-width: 640px) { #coach-bar { display: none; } }
   </style>
 </head>
 <body>
-  <!-- KIDCLIENT BRANDED SPLASH OVERLAY -->
   <div id="splash">
-    <div class="splash-card">
-      <img src="/assets/brand/kidclient-logo-3d.png" alt="KidClient Studio Logo" class="splash-logo" />
-      <div><span class="splash-badge">Path A • 3D Three.js Starter Game</span></div>
-      <h1>Shark-Truck Island</h1>
-      <p>
-        <strong>4yo Client Spec:</strong> "I want a blue monster truck with a shark fin and yellow glasses that chomps giant ice cream cones, jumps off rainbow ramps, and has a red <strong>SILLY BUTTON</strong> that blasts pancakes at block towers!"
-      </p>
-      <button class="start-btn" id="btn-start">▶️ DRIVE SHARK-TRUCK!</button>
+    <div class="brief-card">
+      <div class="brief-top">
+        <span>DESIGN BRIEF #01 // 3D TOYBOX</span>
+        <span>CLIENT: AGE 4</span>
+      </div>
+      <div class="brief-body">
+        <div class="brief-row">
+          <img src="/assets/brand/clay-dino-avatar.jpg" alt="Clay Dino Boss" class="brief-avatar" />
+          <div>
+            <h1>Shark-Truck Island</h1>
+            <p class="brief-sub">&ldquo;Approved by the 4-year-old!&rdquo;</p>
+          </div>
+        </div>
+        <div class="spec-box">
+          <strong>Client Spec:</strong> Drive the matte-clay Shark Monster Truck around Toybox Island, chomp giant ice cream cones, launch off rainbow ramps, smash wooden block towers, and mash the red <strong>SILLY BUTTON</strong> to blast pancakes!
+        </div>
+        <button class="start-btn" id="btn-start">START DRIVING &rarr;</button>
+      </div>
     </div>
   </div>
 
-  <!-- TOP HUD -->
   <div id="hud">
     <div class="hud-group">
       <a href="/" class="pill">
-        <img src="/assets/brand/kidclient-avatar.png" alt="KidClient Mascot" />
-        <span>Arcade</span>
+        <img src="/assets/brand/clay-dino-avatar.jpg" alt="KidClient" />
+        <span>ARCADE</span>
       </a>
-      <a href="/tutorials/path-a-shark-truck/" class="pill pill-guide">🎬 How We Built This</a>
+      <a href="/tutorials/path-a-shark-truck/" class="pill pill-guide">BUILD GUIDE</a>
     </div>
     <div class="hud-group">
-      <div class="pill">🍦 <span id="score">0</span> &nbsp;|&nbsp; 🏆 <span id="best">0</span></div>
+      <div class="pill">🍦 <span id="score">0</span> &nbsp;|&nbsp; ★ <span id="best">0</span></div>
     </div>
   </div>
 
-  <!-- DINO BOSS COACH BUBBLE -->
   <div id="coach-bar">
-    <img src="/assets/brand/kidclient-avatar.png" alt="Dino Boss" />
+    <img src="/assets/brand/clay-dino-avatar.jpg" alt="Clay Dino" />
     <div id="coach-text">
-      <strong>🦖 Dino Client Boss Says:</strong>
-      <span id="coach-msg">Chomp the floating ice creams &amp; smash the colorful block towers!</span>
+      <strong>CLIENT NOTE (AGE 4):</strong>
+      <span id="coach-msg">Smash the toy blocks &amp; press the red Silly Button!</span>
     </div>
   </div>
 
-  <div id="toast">🦈 SHARK-TRUCK PARTY! 🍦</div>
+  <div id="toast">PANCAKE BLAST!</div>
 
   <div id="stick-zone">
-    <div id="stick-knob"></div>
+    <div id="stick-well"><div id="stick-knob"></div></div>
   </div>
 
   <div id="action-buttons">
     <button class="big-btn" id="btn-silly" aria-label="Silly Button">
       <span class="emoji">🥞</span>
-      SILLY<br/>BUTTON
+      SILLY<br/>BTN
     </button>
-    <button class="big-btn" id="btn-jump" aria-label="Jump Boost">
+    <button class="big-btn" id="btn-jump" aria-label="Jump">
       <span class="emoji">🚀</span>
       JUMP
     </button>
@@ -227,7 +243,7 @@
     function showToast(msg) {
       toastEl.textContent = msg;
       toastEl.classList.add('show');
-      setTimeout(() => toastEl.classList.remove('show'), 1900);
+      setTimeout(() => toastEl.classList.remove('show'), 1800);
     }
 
     document.getElementById('btn-start').addEventListener('pointerdown', () => {
@@ -236,182 +252,182 @@
       KidShell.say('Shark truck ready! Let us chomp some ice cream!');
     });
 
-    // --- 2. THREE.JS WORLD & KIDCLIENT BILLBOARD ---
+    // --- 2. THREE.JS MATTE TACTILE TOYBOX SCENE (Warm Studio Daylight!) ---
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x38bdf8);
-    scene.fog = new THREE.FogExp2(0x38bdf8, 0.008);
+    scene.background = new THREE.Color(0xF7F5EE);
+    scene.fog = new THREE.FogExp2(0xF7F5EE, 0.0065);
 
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 240);
+    const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 240);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.body.appendChild(renderer.domElement);
 
-    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x22c55e, 0.9);
+    const hemiLight = new THREE.HemisphereLight(0xfffbeb, 0xd6d3c4, 0.95);
     scene.add(hemiLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 0.95);
-    dirLight.position.set(25, 45, 25);
+    const dirLight = new THREE.DirectionalLight(0xfff7ed, 0.85);
+    dirLight.position.set(28, 48, 22);
     dirLight.castShadow = true;
     scene.add(dirLight);
 
-    // Ocean water surrounding the island
-    const oceanGeo = new THREE.CylinderGeometry(140, 140, 2, 32);
-    const oceanMat = new THREE.MeshLambertMaterial({ color: 0x0284c7 });
+    // Matte Painted Wooden Toy Sea & Island (Direction 1 Clay/Wood Palette)
+    const oceanGeo = new THREE.CylinderGeometry(140, 140, 2, 48);
+    const oceanMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.88, metalness: 0.0 });
     const ocean = new THREE.Mesh(oceanGeo, oceanMat);
     ocean.position.y = -3.2;
     scene.add(ocean);
 
-    // Sunny Tropical Island
     const islandGeo = new THREE.CylinderGeometry(48, 52, 4, 48);
-    const islandMat = new THREE.MeshLambertMaterial({ color: 0x4ade80 });
+    const islandMat = new THREE.MeshStandardMaterial({ color: 0x5ea373, roughness: 0.92 });
     const island = new THREE.Mesh(islandGeo, islandMat);
     island.position.y = -2;
     island.receiveShadow = true;
     scene.add(island);
 
-    // Glowing Neon Cyan & Red Bouncy Bumper Ring (matches KidClient Arcade Banner!)
-    const borderGeo = new THREE.TorusGeometry(47, 1.6, 14, 64);
-    const borderMat = new THREE.MeshPhongMaterial({ color: 0xf43f5e, emissive: 0x881337, shininess: 90 });
+    // Warm Matte Coral Bouncy Ring Border
+    const borderGeo = new THREE.TorusGeometry(47, 1.6, 16, 64);
+    const borderMat = new THREE.MeshStandardMaterial({ color: 0xE55B4B, roughness: 0.78 });
     const border = new THREE.Mesh(borderGeo, borderMat);
     border.rotation.x = Math.PI / 2;
     border.position.y = 0.8;
     scene.add(border);
 
-    // Giant 3D Drive-Through KidClient Stadium Billboard with actual brand textures!
+    // Giant Wooden Easel Arch displaying the Swiss+Crayon Design Brief Board!
     const texLoader = new THREE.TextureLoader();
-    const bannerTex = texLoader.load('/assets/brand/kidclient-banner.png');
-    const logoTex = texLoader.load('/assets/brand/kidclient-logo-3d.png');
+    const briefTex = texLoader.load('/assets/brand/agency-brief-board.jpg');
+    const avatarTex = texLoader.load('/assets/brand/clay-dino-avatar.jpg');
 
+    const woodMat = new THREE.MeshStandardMaterial({ color: 0xd9b98b, roughness: 0.85 });
     const archGroup = new THREE.Group();
-    const pillarMat = new THREE.MeshPhongMaterial({ color: 0x1e293b });
-    [-9, 9].forEach((x) => {
-      const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 1.1, 12, 16), pillarMat);
-      pillar.position.set(x, 6, -22);
+    [-10, 10].forEach((x) => {
+      const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 1.0, 13, 16), woodMat);
+      pillar.position.set(x, 6.5, -22);
       archGroup.add(pillar);
     });
+    const signFrame = new THREE.Mesh(new THREE.BoxGeometry(22, 12.2, 1.0), woodMat);
+    signFrame.position.set(0, 13, -22);
     const signBoard = new THREE.Mesh(
-      new THREE.BoxGeometry(20, 9.5, 1.2),
-      new THREE.MeshBasicMaterial({ map: bannerTex })
+      new THREE.PlaneGeometry(20.6, 11.0),
+      new THREE.MeshBasicMaterial({ map: briefTex })
     );
-    signBoard.position.set(0, 12.5, -22);
-    archGroup.add(signBoard);
+    signBoard.position.set(0, 13, -21.45);
+    archGroup.add(signFrame, signBoard);
     scene.add(archGroup);
 
-    // Jump Ramps on the Island
+    // Rainbow Crayon Ramps
     const ramps = [];
-    const rampGeo = new THREE.BoxGeometry(7, 2.2, 8);
-    const rampMat = new THREE.MeshLambertMaterial({ color: 0xa855f7 });
-    [[14, 8], [-15, 10], [0, -10]].forEach(([rx, rz]) => {
-      const ramp = new THREE.Mesh(rampGeo, rampMat);
+    const rampColors = [0xF6C945, 0xE55B4B, 0x1546F6];
+    [[14, 8], [-15, 10], [0, -10]].forEach(([rx, rz], idx) => {
+      const ramp = new THREE.Mesh(
+        new THREE.BoxGeometry(7.5, 2.2, 8.5),
+        new THREE.MeshStandardMaterial({ color: rampColors[idx], roughness: 0.82 })
+      );
       ramp.position.set(rx, 0.2, rz);
-      ramp.rotation.x = -0.25;
+      ramp.rotation.x = -0.24;
       scene.add(ramp);
       ramps.push(ramp);
     });
 
-    // --- 3. KNOCK-OVER COLORFUL VOXEL BLOCK TOWERS (Inspired by the KidClient Logo!) ---
+    // --- 3. PAINTED WOODEN TOY BLOCK TOWERS ---
     const blocks = [];
-    const blockColors = [0xf43f5e, 0xfacc15, 0x38bdf8, 0xa855f7, 0x22c55e];
-    const blockGeo = new THREE.BoxGeometry(1.8, 1.8, 1.8);
+    const blockColors = [0xE55B4B, 0xF6C945, 0x1546F6, 0x2E8B57, 0xd9b98b];
+    const blockGeo = new THREE.BoxGeometry(1.9, 1.9, 1.9);
 
-    function spawnBlockTowers() {
-      [[-10, -6], [10, -6], [-18, -14], [18, -14]].forEach(([tx, tz]) => {
-        for (let y = 0; y < 4; y++) {
-          const bMat = new THREE.MeshPhongMaterial({ color: blockColors[(y + Math.abs(tx)) % blockColors.length] });
-          const b = new THREE.Mesh(blockGeo, bMat);
-          b.position.set(tx, 0.9 + y * 1.85, tz);
-          b.userData = {
-            homeX: tx, homeY: 0.9 + y * 1.85, homeZ: tz,
-            vx: 0, vy: 0, vz: 0, hitTimer: 0
-          };
-          b.castShadow = true;
-          scene.add(b);
-          blocks.push(b);
-        }
-      });
-    }
-    spawnBlockTowers();
+    [[-10, -6], [10, -6], [-18, -14], [18, -14]].forEach(([tx, tz]) => {
+      for (let y = 0; y < 4; y++) {
+        const bMat = new THREE.MeshStandardMaterial({
+          color: blockColors[(y + Math.abs(tx)) % blockColors.length],
+          roughness: 0.85
+        });
+        const b = new THREE.Mesh(blockGeo, bMat);
+        b.position.set(tx, 0.95 + y * 1.92, tz);
+        b.userData = {
+          homeX: tx, homeY: 0.95 + y * 1.92, homeZ: tz,
+          vx: 0, vy: 0, vz: 0, hitTimer: 0
+        };
+        b.castShadow = true;
+        scene.add(b);
+        blocks.push(b);
+      }
+    });
 
-    // --- 4. THE HERO: SHARK MONSTER TRUCK WITH KIDCLIENT YELLOW GLASSES ---
+    // --- 4. THE HERO: MATTE CLAY SHARK MONSTER TRUCK ---
     const truck = new THREE.Group();
-    const bodyMat = new THREE.MeshPhongMaterial({ color: 0x0284c7, shininess: 90 });
-    const bellyMat = new THREE.MeshPhongMaterial({ color: 0xe0f2fe });
+    const clayBlue = new THREE.MeshStandardMaterial({ color: 0x1546F6, roughness: 0.82 });
+    const clayCream = new THREE.MeshStandardMaterial({ color: 0xF7F5EE, roughness: 0.88 });
+    const clayYellow = new THREE.MeshStandardMaterial({ color: 0xF6C945, roughness: 0.8 });
 
-    const bodyMesh = new THREE.Mesh(new THREE.BoxGeometry(2.8, 1.5, 4.2), bodyMat);
+    const bodyMesh = new THREE.Mesh(new THREE.BoxGeometry(2.8, 1.5, 4.2), clayBlue);
     bodyMesh.position.y = 1.5;
     bodyMesh.castShadow = true;
     truck.add(bodyMesh);
 
-    const bellyMesh = new THREE.Mesh(new THREE.BoxGeometry(2.85, 0.5, 4.25), bellyMat);
+    const bellyMesh = new THREE.Mesh(new THREE.BoxGeometry(2.85, 0.5, 4.25), clayCream);
     bellyMesh.position.y = 0.95;
     truck.add(bellyMesh);
 
-    // KidClient Flag on the back of the truck
-    const flagPole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 2.5), pillarMat);
+    // Clay Dino Boss Pennant Flag on rear
+    const flagPole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 2.7), woodMat);
     flagPole.position.set(0, 2.8, -1.8);
     const flagBanner = new THREE.Mesh(
-      new THREE.PlaneGeometry(2.2, 1.4),
-      new THREE.MeshBasicMaterial({ map: logoTex, side: THREE.DoubleSide })
+      new THREE.PlaneGeometry(1.8, 1.8),
+      new THREE.MeshBasicMaterial({ map: avatarTex, side: THREE.DoubleSide })
     );
-    flagBanner.position.set(0, 3.6, -1.8);
+    flagBanner.position.set(0, 3.8, -1.8);
     truck.add(flagPole, flagBanner);
 
-    // Dorsal Shark Fin + Tail Fin
-    const finGeo = new THREE.ConeGeometry(0.65, 1.8, 4);
-    const finMesh = new THREE.Mesh(finGeo, bodyMat);
+    // Shark Fin
+    const finMesh = new THREE.Mesh(new THREE.ConeGeometry(0.65, 1.8, 4), clayBlue);
     finMesh.position.set(0, 2.9, -0.2);
     finMesh.rotation.x = -0.35;
     truck.add(finMesh);
 
-    // Googly Eyes + Signature KidClient Yellow Glasses Frame!
-    const eyeWhite = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const eyePupil = new THREE.MeshBasicMaterial({ color: 0x0f172a });
-    const glassesMat = new THREE.MeshPhongMaterial({ color: 0xfacc15 });
+    // Matte Clay Googly Eyes + Yellow Glasses
+    const eyeWhite = new THREE.MeshStandardMaterial({ color: 0xF7F5EE, roughness: 0.9 });
+    const eyePupil = new THREE.MeshStandardMaterial({ color: 0x1C1E21, roughness: 0.8 });
     [-0.75, 0.75].forEach((x) => {
       const eye = new THREE.Mesh(new THREE.SphereGeometry(0.38, 14, 14), eyeWhite);
       eye.position.set(x, 1.85, 2.1);
       const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.19, 10, 10), eyePupil);
       pupil.position.set(x, 1.85, 2.4);
-      const rim = new THREE.Mesh(new THREE.TorusGeometry(0.45, 0.09, 10, 20), glassesMat);
+      const rim = new THREE.Mesh(new THREE.TorusGeometry(0.45, 0.09, 10, 20), clayYellow);
       rim.position.set(x, 1.85, 2.18);
       truck.add(eye, pupil, rim);
     });
 
-    // 4 Giant Monster Tires with Orange Rims (matching the KidClient Banner!)
-    const wheelGeo = new THREE.CylinderGeometry(1.0, 1.0, 0.85, 18);
-    const wheelMat = new THREE.MeshLambertMaterial({ color: 0x1e293b });
-    const rimGeo = new THREE.CylinderGeometry(0.52, 0.52, 0.9, 14);
-    const rimMat = new THREE.MeshLambertMaterial({ color: 0xf59e0b });
+    // Chunky Matte Rubber Tires
+    const wheelGeo = new THREE.CylinderGeometry(1.05, 1.05, 0.88, 18);
+    const wheelMat = new THREE.MeshStandardMaterial({ color: 0x272a30, roughness: 0.92 });
+    const rimGeo = new THREE.CylinderGeometry(0.52, 0.52, 0.92, 14);
     const wheels = [];
-    [[-1.65, 1.45], [1.65, 1.45], [-1.65, -1.45], [1.65, -1.45]].forEach(([x, z]) => {
-      const wheelGroup = new THREE.Group();
+    [[-1.68, 1.45], [1.68, 1.45], [-1.68, -1.45], [1.68, -1.45]].forEach(([x, z]) => {
+      const wg = new THREE.Group();
       const tire = new THREE.Mesh(wheelGeo, wheelMat);
-      const hub = new THREE.Mesh(rimGeo, rimMat);
+      const hub = new THREE.Mesh(rimGeo, clayYellow);
       tire.rotation.z = Math.PI / 2;
       hub.rotation.z = Math.PI / 2;
-      wheelGroup.add(tire, hub);
-      wheelGroup.position.set(x, 1.0, z);
-      truck.add(wheelGroup);
-      wheels.push(wheelGroup);
+      wg.add(tire, hub);
+      wg.position.set(x, 1.05, z);
+      truck.add(wg);
+      wheels.push(wg);
     });
-
     scene.add(truck);
 
-    // --- 5. FLOATING ICE CREAM CONES ---
+    // --- 5. MATTE CLAY ICE CREAM CONES ---
     const cones = [];
-    const coneMat = new THREE.MeshLambertMaterial({ color: 0xd97706 });
-    const scoopColors = [0xf472b6, 0xa78bfa, 0xfef08a, 0x34d399, 0x38bdf8];
+    const coneMat = new THREE.MeshStandardMaterial({ color: 0xd99b52, roughness: 0.9 });
+    const scoopColors = [0xE55B4B, 0xF6C945, 0x60a5fa, 0x34d399, 0xf472b6];
 
     function spawnCone() {
       const group = new THREE.Group();
       const waffle = new THREE.Mesh(new THREE.ConeGeometry(0.7, 1.7, 14), coneMat);
       waffle.rotation.x = Math.PI;
       waffle.position.y = 1.0;
-      const scoopColor = scoopColors[Math.floor(Math.random() * scoopColors.length)];
       const scoop = new THREE.Mesh(
-        new THREE.SphereGeometry(0.8, 16, 16),
-        new THREE.MeshPhongMaterial({ color: scoopColor, shininess: 60 })
+        new THREE.SphereGeometry(0.82, 16, 16),
+        new THREE.MeshStandardMaterial({ color: scoopColors[Math.floor(Math.random() * scoopColors.length)], roughness: 0.82 })
       );
       scoop.position.y = 2.05;
       group.add(waffle, scoop);
@@ -424,21 +440,20 @@
     }
     for (let i = 0; i < 16; i++) spawnCone();
 
-    // --- 6. SILLY BUTTON: GIANT PANCAKE STACKS & CONFETTI ---
+    // --- 6. SILLY BUTTON PANCAKES ---
     const pancakes = [];
-    const pancakeGeo = new THREE.CylinderGeometry(1.25, 1.25, 0.3, 18);
-    const pancakeMat = new THREE.MeshLambertMaterial({ color: 0xfbbf24 });
-    const butterGeo = new THREE.BoxGeometry(0.6, 0.2, 0.6);
-    const butterMat = new THREE.MeshLambertMaterial({ color: 0xfef08a });
+    const pancakeGeo = new THREE.CylinderGeometry(1.25, 1.25, 0.32, 18);
+    const pancakeMat = new THREE.MeshStandardMaterial({ color: 0xe6a84c, roughness: 0.88 });
+    const butterGeo = new THREE.BoxGeometry(0.6, 0.22, 0.6);
+    const butterMat = new THREE.MeshStandardMaterial({ color: 0xF6C945, roughness: 0.75 });
 
     function triggerSillyButton() {
       KidShell.sfx.silly();
-      // Launch 3 bouncy pancakes in a fan!
       [-0.22, 0, 0.22].forEach((spread) => {
         const pGroup = new THREE.Group();
         const flapjack = new THREE.Mesh(pancakeGeo, pancakeMat);
         const butter = new THREE.Mesh(butterGeo, butterMat);
-        butter.position.y = 0.2;
+        butter.position.y = 0.22;
         pGroup.add(flapjack, butter);
         pGroup.position.copy(truck.position);
         pGroup.position.y += 2.3;
@@ -448,18 +463,14 @@
         scene.add(pGroup);
         pancakes.push(pGroup);
       });
-      // Give the truck a silly spin hop!
       if (truck.position.y <= 0.2) velocityY = 0.28;
-      showToast('🥞 SILLY PANCAKE BLAST! 🦈');
-      coachMsgEl.textContent = 'HAHA! Look at all those flying pancakes!';
+      showToast('🥞 PANCAKE LAUNCHER!');
+      coachMsgEl.textContent = 'APPROVED! More pancakes!!';
     }
 
-    // --- 7. CONTROLS (TOUCH + KEYBOARD) ---
-    let inputX = 0, inputY = 0;
-    let velocityY = 0;
-    let truckAngle = 0;
+    // --- 7. INPUT ---
+    let inputX = 0, inputY = 0, velocityY = 0, truckAngle = 0;
     const keys = {};
-
     window.addEventListener('keydown', (e) => {
       keys[e.code] = true;
       if (e.code === 'Space') jump();
@@ -471,16 +482,12 @@
       if (truck.position.y <= 0.3) {
         velocityY = 0.46;
         KidShell.sfx.boing();
-        showToast('🚀 SUPER SHARK JUMP!');
+        showToast('🚀 BOING JUMP!');
       }
     }
 
-    document.getElementById('btn-jump').addEventListener('pointerdown', (e) => {
-      e.preventDefault(); jump();
-    });
-    document.getElementById('btn-silly').addEventListener('pointerdown', (e) => {
-      e.preventDefault(); triggerSillyButton();
-    });
+    document.getElementById('btn-jump').addEventListener('pointerdown', (e) => { e.preventDefault(); jump(); });
+    document.getElementById('btn-silly').addEventListener('pointerdown', (e) => { e.preventDefault(); triggerSillyButton(); });
 
     const stickZone = document.getElementById('stick-zone');
     const stickKnob = document.getElementById('stick-knob');
@@ -488,16 +495,11 @@
 
     function handleStick(e) {
       const rect = stickZone.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      let dx = e.clientX - cx;
-      let dy = e.clientY - cy;
-      const maxR = 46;
+      let dx = e.clientX - (rect.left + rect.width / 2);
+      let dy = e.clientY - (rect.top + rect.height / 2);
+      const maxR = 40;
       const dist = Math.hypot(dx, dy);
-      if (dist > maxR) {
-        dx = (dx / dist) * maxR;
-        dy = (dy / dist) * maxR;
-      }
+      if (dist > maxR) { dx = (dx / dist) * maxR; dy = (dy / dist) * maxR; }
       stickKnob.style.transform = `translate(${dx}px, ${dy}px)`;
       inputX = dx / maxR;
       inputY = dy / maxR;
@@ -508,9 +510,7 @@
       stickZone.setPointerCapture(e.pointerId);
       handleStick(e);
     });
-    stickZone.addEventListener('pointermove', (e) => {
-      if (stickActive) handleStick(e);
-    });
+    stickZone.addEventListener('pointermove', (e) => { if (stickActive) handleStick(e); });
     const resetStick = () => {
       stickActive = false;
       stickKnob.style.transform = 'translate(0px, 0px)';
@@ -519,14 +519,13 @@
     stickZone.addEventListener('pointerup', resetStick);
     stickZone.addEventListener('pointercancel', resetStick);
 
-    // --- 8. MAIN ANIMATION LOOP ---
+    // --- 8. LOOP ---
     let clock = 0;
     function animate() {
       requestAnimationFrame(animate);
       clock += 0.05;
 
-      let steer = inputX;
-      let throttle = -inputY;
+      let steer = inputX, throttle = -inputY;
       if (keys['ArrowLeft'] || keys['KeyA']) steer = -1;
       if (keys['ArrowRight'] || keys['KeyD']) steer = 1;
       if (keys['ArrowUp'] || keys['KeyW']) throttle = 1;
@@ -538,19 +537,16 @@
       const speed = throttle * 0.4;
       truck.position.x += Math.sin(truckAngle) * speed;
       truck.position.z += Math.cos(truckAngle) * speed;
-
       wheels.forEach((w) => { w.rotation.x += speed * 0.55; });
 
-      // Ramp boost check
       ramps.forEach((r) => {
         if (Math.hypot(truck.position.x - r.position.x, truck.position.z - r.position.z) < 4.5 && Math.abs(speed) > 0.15 && truck.position.y < 0.5) {
           velocityY = 0.52;
           KidShell.sfx.boing();
-          showToast('🌈 RAMP STUNT JUMP!');
+          showToast('🌈 RAMP STUNT!');
         }
       });
 
-      // Bouncy Ring Boundary (No falling off!)
       const distFromCenter = Math.hypot(truck.position.x, truck.position.z);
       if (distFromCenter > 43.5) {
         const pushAngle = Math.atan2(truck.position.x, truck.position.z);
@@ -558,22 +554,15 @@
         truck.position.z = Math.cos(pushAngle) * 43.0;
         velocityY = 0.35;
         KidShell.sfx.boing();
-        showToast('BOING! Bouncy Bumper Ring!');
+        showToast('BOING! NO FALLING OFF!');
       }
 
-      // Gravity
       truck.position.y += velocityY;
-      if (truck.position.y > 0) {
-        velocityY -= 0.018;
-      } else {
-        truck.position.y = 0;
-        velocityY = 0;
-      }
+      if (truck.position.y > 0) velocityY -= 0.018;
+      else { truck.position.y = 0; velocityY = 0; }
 
-      // Knock over Voxel Block Towers with Truck or Pancakes!
       blocks.forEach((b) => {
-        const dTruck = b.position.distanceTo(truck.position);
-        if (dTruck < 3.4) {
+        if (b.position.distanceTo(truck.position) < 3.4) {
           b.userData.vx = (b.position.x - truck.position.x) * 0.25;
           b.userData.vy = 0.35;
           b.userData.vz = (b.position.z - truck.position.z) * 0.25;
@@ -596,8 +585,8 @@
           b.userData.vy -= 0.02;
           b.rotation.x += 0.1;
           b.rotation.z += 0.1;
-          if (b.position.y < 0.9) {
-            b.position.y = 0.9;
+          if (b.position.y < 0.95) {
+            b.position.y = 0.95;
             b.userData.vy *= -0.5;
             b.userData.vx *= 0.85;
             b.userData.vz *= 0.85;
@@ -611,7 +600,6 @@
         }
       });
 
-      // Collect Ice Cream Cones
       for (let i = cones.length - 1; i >= 0; i--) {
         const c = cones[i];
         c.rotation.y += 0.045;
@@ -622,25 +610,22 @@
           score++;
           scoreEl.textContent = score;
           KidShell.sfx.coin();
-
           const scale = Math.min(1 + score * 0.015, 1.65);
           truck.scale.set(scale, scale, scale);
-
           if (score > best) {
             best = score;
             bestEl.textContent = best;
             KidShell.save('3d_best_cones', best);
           }
           if (score % 5 === 0) {
-            showToast(`🎉 ${score} ICE CREAMS! SHARK POWER!`);
-            coachMsgEl.textContent = `WOW! ${score} cones! The Shark-Truck is growing bigger!`;
+            showToast(`★ ${score} CONES! APPROVED!`);
+            coachMsgEl.textContent = `WOW! ${score} ice creams!`;
             KidShell.say(`${score} ice creams! Way to go boss!`);
           }
           spawnCone();
         }
       }
 
-      // Update Pancakes
       for (let i = pancakes.length - 1; i >= 0; i--) {
         const p = pancakes[i];
         p.position.add(p.userData.vel);
@@ -657,15 +642,9 @@
         }
       }
 
-      // Smooth follow camera
-      const camOffset = new THREE.Vector3(
-        -Math.sin(truckAngle) * 13,
-        7.8,
-        -Math.cos(truckAngle) * 13
-      );
+      const camOffset = new THREE.Vector3(-Math.sin(truckAngle) * 13, 7.8, -Math.cos(truckAngle) * 13);
       camera.position.lerp(truck.position.clone().add(camOffset), 0.1);
       camera.lookAt(truck.position.x, truck.position.y + 1.8, truck.position.z);
-
       renderer.render(scene, camera);
     }
 
@@ -674,7 +653,6 @@
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
-
     animate();
   </script>
 </body>

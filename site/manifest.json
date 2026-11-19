@@ -1,19 +1,13 @@
 {
-  "name": "KidClient Arcade — AI Games Built with a 4-Year-Old",
+  "name": "KidClient — Parent Consultant + 4yo Creative Director",
   "short_name": "KidClient",
-  "description": "Playable tablet-ready games, parent guides, and AI prompts from KidClient Studios.",
+  "description": "Playable tactile tablet games, printable client briefs, and AI guides built with a 4-year-old.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "landscape",
-  "background_color": "#0f172a",
-  "theme_color": "#38bdf8",
+  "background_color": "#F7F5EE",
+  "theme_color": "#F6C945",
   "icons": [
-    {
-      "src": "/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    },
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
