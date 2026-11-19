@@ -3,184 +3,180 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Design Brief #01: How to Build 3D Shark-Truck Island | KidClient</title>
+  <title>How to Build 3D Shark-Truck Island | KidClient Toybox Guide</title>
   <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=JetBrains+Mono:wght@500;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --paper: #F7F5EE;
-      --paper-warm: #EFECE1;
-      --grid-line: rgba(28, 30, 33, 0.08);
-      --ink: #1C1E21;
-      --muted: #52565E;
-      --blue: #1546F6;
-      --red: #F02D2D;
-      --coral: #E55B4B;
-      --yellow: #F6C945;
-      --green: #2E8B57;
+      --birch: #EDE3CF;
+      --cream: #FCF8EB;
+      --card: #FFFDF6;
+      --ink: #3B3026;
+      --muted: #6E5E4F;
+      --coral: #E05A47;
+      --coral-deep: #B94232;
+      --cobalt: #2A5CA8;
+      --yellow: #F5C84C;
+      --yellow-deep: #D2A024;
+      --green: #3D7A52;
+      --green-deep: #29593A;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-family: 'Nunito', system-ui, sans-serif;
       color: var(--ink);
-      background-color: var(--paper);
-      background-image:
-        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-      background-size: 32px 32px;
-      line-height: 1.6;
+      background: radial-gradient(circle at 20% 0%, #F5ECDA 0%, #EDE3CF 55%, #E3D4B9 100%);
+      line-height: 1.65;
     }
-    .container { max-width: 980px; margin: 0 auto; padding: 24px 24px 80px; }
+    h1, h2, h3, .toy-font { font-family: 'Fredoka', system-ui, sans-serif; }
+    .workbench {
+      max-width: 980px; margin: 24px auto 64px; padding: 28px 32px 48px;
+      background: var(--cream); border-radius: 34px;
+      box-shadow: 0 24px 60px rgba(74, 56, 38, 0.18), 0 6px 0 #D8C9AE;
+    }
+    @media (max-width: 680px) { .workbench { margin: 12px; padding: 20px 18px; border-radius: 24px; } }
     header {
       display: flex; justify-content: space-between; align-items: center;
       flex-wrap: wrap; gap: 14px; padding-bottom: 20px;
-      border-bottom: 2px solid var(--ink);
+      border-bottom: 2px dashed #DFD2B8;
     }
-    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
-    .brand img.av { width: 44px; height: 44px; border-radius: 10px; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); }
-    .brand img.wm { height: 42px; }
-    .btn {
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand img.av { width: 48px; height: 48px; border-radius: 14px; object-fit: cover; box-shadow: 0 4px 0 var(--yellow-deep); }
+    .brand img.wm { height: 44px; }
+    .toy-btn {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 18px; border-radius: 12px; font-weight: 800;
-      text-decoration: none; font-size: 14px; cursor: pointer;
-      border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink);
-      font-family: 'JetBrains Mono', monospace; text-transform: uppercase;
+      padding: 11px 20px; border-radius: 18px; font-weight: 700;
+      text-decoration: none; font-size: 15px; cursor: pointer; border: none;
+      font-family: 'Fredoka', sans-serif;
     }
-    .btn-play { background: var(--green); color: #fff; }
-    .btn-back { background: #fff; color: var(--ink); }
+    .btn-green { background: var(--green); color: #FFFDF6; box-shadow: 0 5px 0 var(--green-deep); }
+    .btn-cream { background: #F4ECD8; color: var(--ink); box-shadow: 0 5px 0 #D6C6A6; }
+    .btn-yellow { background: var(--yellow); color: var(--ink); box-shadow: 0 5px 0 var(--yellow-deep); }
 
-    .hero-brief {
-      margin: 28px 0; background: #fff; border: 2.5px solid var(--ink);
-      border-radius: 22px; box-shadow: 8px 8px 0 var(--ink); overflow: hidden;
+    .hero-card {
+      margin: 26px 0; background: var(--card); border-radius: 28px;
+      padding: 16px; box-shadow: 0 12px 28px rgba(74, 56, 38, 0.12), 0 6px 0 #DFD2B8;
     }
-    .hero-top {
-      background: var(--yellow); border-bottom: 2px solid var(--ink);
-      padding: 10px 22px; display: flex; justify-content: space-between;
-      font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 800;
+    .hero-card img { width: 100%; max-height: 390px; object-fit: cover; border-radius: 18px; display: block; }
+    .hero-body { padding: 20px 10px 8px; }
+    .stamp {
+      display: inline-block; color: var(--coral); border: 2.5px solid var(--coral);
+      border-radius: 10px; padding: 3px 12px; font-family: 'Fredoka', sans-serif;
+      font-size: 13px; text-transform: uppercase; transform: rotate(-1.5deg); margin-bottom: 8px;
     }
-    .hero-brief img { width: 100%; max-height: 380px; object-fit: cover; display: block; border-bottom: 2px solid var(--ink); }
-    .hero-body { padding: 26px; }
-    h1 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; letter-spacing: -0.025em; }
+    h1 { margin: 4px 0 10px; font-size: clamp(28px, 4vw, 40px); line-height: 1.12; }
 
     .video-box {
-      background: #fff; border: 2.5px solid var(--ink); border-radius: 22px;
-      padding: 20px; box-shadow: 6px 6px 0 var(--ink); margin: 28px 0;
+      background: var(--card); border-radius: 28px; padding: 22px;
+      box-shadow: 0 12px 28px rgba(74, 56, 38, 0.12), 0 6px 0 #DFD2B8; margin: 28px 0;
     }
-    .video-box video { width: 100%; border-radius: 14px; border: 2px solid var(--ink); display: block; background: #1C1E21; }
+    .video-box video { width: 100%; border-radius: 18px; display: block; background: #3B3026; }
 
     .step-card {
-      background: #fff; border: 2.5px solid var(--ink); border-radius: 20px;
-      padding: 26px; margin-bottom: 24px; box-shadow: 6px 6px 0 var(--ink);
+      background: var(--card); border-radius: 26px; padding: 26px;
+      margin-bottom: 24px; box-shadow: 0 10px 24px rgba(74, 56, 38, 0.1), 0 5px 0 #DFD2B8;
     }
-    .step-card h2 { margin-top: 0; font-size: 24px; display: flex; align-items: center; gap: 10px; }
-    .step-badge {
-      background: var(--blue); color: #fff; font-family: 'JetBrains Mono', monospace;
-      font-size: 13px; padding: 3px 10px; border-radius: 8px;
+    .step-card h2 { margin-top: 0; font-size: 24px; display: flex; align-items: center; gap: 12px; }
+    .num-pill {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 12px; color: #fff; font-size: 18px;
+      background: var(--coral);
     }
     pre {
-      background: var(--paper); color: var(--ink); padding: 18px; border-radius: 12px;
-      overflow-x: auto; font-size: 13.5px; border: 2px solid var(--ink);
-      font-family: 'JetBrains Mono', monospace; white-space: pre-wrap;
+      background: #F4ECD8; color: var(--ink); padding: 18px; border-radius: 16px;
+      overflow-x: auto; font-size: 13.5px; white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 600;
     }
-    .copy-btn {
-      background: var(--yellow); color: var(--ink); padding: 8px 16px;
-      border-radius: 10px; font-weight: 800; cursor: pointer;
-      border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
-      font-family: 'JetBrains Mono', monospace; font-size: 13px; margin-bottom: 10px;
-    }
-    .teach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .teach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
     .teach-item {
-      background: var(--paper-warm); padding: 18px; border-radius: 14px;
-      border: 2px solid var(--ink); border-left: 6px solid var(--coral);
+      background: #F4ECD8; padding: 18px; border-radius: 20px;
+      box-shadow: 0 4px 0 #DFD2B8;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <main class="workbench">
     <header>
       <a href="/" class="brand">
         <img src="/assets/brand/clay-dino-avatar.jpg" alt="Clay Dino" class="av" />
         <img src="/logo.svg" alt="KidClient" class="wm" />
       </a>
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <a href="/" class="btn btn-back">&larr; Arcade</a>
-        <a href="/templates/3d-threejs/" class="btn btn-play">Play Shark-Truck</a>
+        <a href="/" class="toy-btn btn-cream">&larr; Toybox Home</a>
+        <a href="/templates/3d-threejs/" class="toy-btn btn-green">Play Shark-Truck</a>
       </div>
     </header>
 
-    <div class="hero-brief">
-      <div class="hero-top">
-        <span>EPISODE 01 // DESIGN BRIEF &amp; BUILD GUIDE</span>
-        <span>STATUS: APPROVED BY THE 4YO</span>
-      </div>
-      <img src="/assets/brand/agency-brief-board.jpg" alt="KidClient Design Brief 01 — Shark Truck Crayon Spec" />
+    <div class="hero-card">
+      <img src="/assets/brand/toybox-board.jpg" alt="KidClient Tactile Toybox Studio Flat-Lay" />
       <div class="hero-body">
-        <h1>How to Build &ldquo;3D Shark-Truck Island&rdquo; With Your 4-Year-Old</h1>
+        <span class="stamp">★ Episode 01 • Parent &amp; Kid Build Guide</span>
+        <h1>How to Build &ldquo;3D Shark-Truck Island&rdquo; Together</h1>
         <p style="color:var(--muted); font-size:17px; margin:0;">
-          Watch the quick walkthrough, copy our exact 4-year-old Client Brief &amp; System Prompt, and build a matte tactile 3D toybox island for $0 on any tablet or laptop.
+          Watch our short walkthrough video, copy the exact 4-year-old Client Brief &amp; System Prompt below, and craft a playable matte-clay 3D toybox world with your child for $0.
         </p>
       </div>
     </div>
 
     <div class="video-box">
-      <h2 style="margin:0 0 12px; font-size:20px;">🎬 Episode 01 Walkthrough Video (Hybrid 1+2 Style)</h2>
+      <h2 style="margin:0 0 14px; font-size:22px;">🎬 Episode 01 Walkthrough Video</h2>
       <video controls preload="metadata" poster="/assets/brand/kidclient-og-1280x720.jpg">
         <source src="/assets/videos/path-a-shark-truck-tutorial.mp4" type="video/mp4" />
       </video>
     </div>
 
     <div class="step-card">
-      <h2><span class="step-badge">STEP 01</span> The 5-Minute Client Brief</h2>
-      <p>Fill out these 4 questions with your child before touching any AI tool:</p>
-      <button class="copy-btn" onclick="copyText('brief-code', this)">COPY CLIENT BRIEF</button>
+      <h2><span class="num-pill" style="background:var(--yellow); color:var(--ink);">1</span> The 5-Minute 4yo Toy Pitch</h2>
+      <p>Ask your child these 4 questions while sketching on paper before touching any AI tool:</p>
+      <button class="toy-btn btn-yellow" style="font-size:14px; padding:9px 16px; margin-bottom:10px;" onclick="copyText('brief-code', this)">Copy Client Brief</button>
       <pre id="brief-code"># CLIENT BRIEF FOR AI DEVELOPER
 - Client: Age 4 Creative Director
-- Game Style: Matte Clay / Toybox 3D World (Three.js Single-File HTML5)
-- The Hero: A Klein-blue monster truck with a shark fin, matte clay googly eyes with yellow glasses, and big rubber tires.
-- The Goal: Drive around a warm wooden toy island and chomp floating ice cream cones! Every cone plays a chime and grows the truck bigger.
-- Kid-Safe Rule (No Losing!): Surround the island with a coral bouncy bumper ring so the truck never falls off—hitting the edge bounces you back with a "BOING!"
-- Knock-Over Toys: Add painted wooden block towers and crayon-colored stunt ramps!
-- The Big Red Silly Button: A chunky tactile red button that launches 3 buttered pancakes out of the front of the truck!</pre>
+- Game Style: Matte Clay &amp; Painted Wood Toybox 3D World (Three.js Single-File HTML5)
+- The Hero: A cobalt-blue clay monster truck with a shark fin, googly eyes, yellow hubcaps, and big matte rubber tires.
+- The Goal: Drive around a warm wooden toy island and chomp floating clay ice cream cones! Every cone plays a chime and grows the truck bigger.
+- No-Losing Rule: Surround the island with a coral bouncy bumper ring so the truck never falls off—hitting the edge bounces you back with a "BOING!"
+- Knock-Over Toys: Add painted wooden block towers and yellow/coral stunt ramps!
+- The Big Silly Button: A chunky coral button inside a yellow toybox controller that launches 3 buttered pancakes out of the front of the truck!</pre>
     </div>
 
     <div class="step-card">
-      <h2><span class="step-badge">STEP 02</span> Drop-In System Prompt (Works With Any Free AI)</h2>
-      <p>Paste this right above your child&rsquo;s brief in free Claude Artifacts, ChatGPT Canvas, Gemini, or Antigravity:</p>
-      <button class="copy-btn" onclick="copyText('sys-code', this)">COPY SYSTEM PROMPT</button>
-      <pre id="sys-code">You are the Lead Game Developer for "KidClient." Take the 4-year-old Client Brief below and output a complete, runnable, tablet-ready 3D game in a SINGLE self-contained index.html file using Three.js (https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js).
+      <h2><span class="num-pill" style="background:var(--cobalt);">2</span> Paste the System Prompt Into Any Free AI</h2>
+      <p>Copy this right above your child&rsquo;s brief in free Claude Artifacts, ChatGPT Canvas, Gemini, or Antigravity:</p>
+      <button class="toy-btn btn-yellow" style="font-size:14px; padding:9px 16px; margin-bottom:10px;" onclick="copyText('sys-code', this)">Copy System Prompt</button>
+      <pre id="sys-code">You are the Lead Game Developer for "KidClient Toybox Studio." Take the 4-year-old Client Brief below and output a complete, runnable, tablet-ready 3D game in a SINGLE self-contained index.html file using Three.js (https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js).
 
 Rules:
-1. TACTILE TOYBOX AESTHETIC: Use warm studio daylight, matte MeshStandardMaterial (roughness 0.85) clay &amp; painted wood tones, and zero broken external files.
-2. WEB AUDIO + VOICE SYNTH: Build a native AudioContext synthesizer for boings, coin chimes, and silly horns, plus window.speechSynthesis cheers every 5 points.
-3. IPAD TOUCH CONTROLS: Include touch-action:none CSS, a chunky bottom-left yellow toybox thumbstick pad, and two bottom-right physical arcade buttons (Green JUMP + Red SILLY BTN).
-4. TODDLER UX: Zero Game Over screens! Forgiving collection hitboxes + localStorage high-score persistence.</pre>
+1. TACTILE TOYBOX AESTHETIC: Warm studio daylight, matte MeshStandardMaterial (roughness 0.86) polymer-clay &amp; painted wooden toy colors, zero broken external files.
+2. WEB AUDIO + VOICE SYNTH: Build a native AudioContext synthesizer for boings, chimes, and silly horn sounds, plus window.speechSynthesis cheers every 5 points.
+3. IPAD TOUCH CONTROLS: Include touch-action:none CSS, a chunky bottom-left yellow arcade thumbstick box, and bottom-right matte coral "Silly!" and green "Jump!" buttons.
+4. TODDLER UX: Zero Game Over screens! Forgiving collection hitboxes + localStorage high-score saving.</pre>
     </div>
 
     <div class="step-card">
-      <h2><span class="step-badge">STEP 03</span> Teach AI Literacy Through Bugs</h2>
+      <h2><span class="num-pill" style="background:var(--green);">3</span> Turn AI Mistakes Into Teaching Moments</h2>
       <div class="teach-grid">
         <div class="teach-item">
           <strong>🛞 &ldquo;Why are the wheels spinning sideways?&rdquo;</strong>
           <p style="margin:6px 0 0; color:var(--muted); font-size:14.5px;">AI doesn&rsquo;t have eyes—it guessed the wrong axis! Let your child direct the fix: <em>&ldquo;Roll the tires on the X axis.&rdquo;</em></p>
         </div>
         <div class="teach-item">
-          <strong>🥞 &ldquo;Make the Silly Button crazier!&rdquo;</strong>
-          <p style="margin:6px 0 0; color:var(--muted); font-size:14.5px;">Let your 4yo be QA Tester: change numbers together (3 pancakes &rarr; 10 pancakes) to teach cause and effect.</p>
+          <strong>🥞 &ldquo;Make the Silly Button even sillier!&rdquo;</strong>
+          <p style="margin:6px 0 0; color:var(--muted); font-size:14.5px;">Let your 4yo be QA Tester: change numbers together (3 pancakes &rarr; 10 pancakes) to see cause and effect live.</p>
         </div>
         <div class="teach-item">
-          <strong>📱 Offline iPad Mode</strong>
+          <strong>📱 Play Offline on the iPad</strong>
           <p style="margin:6px 0 0; color:var(--muted); font-size:14.5px;">Open <strong>kidclient.com</strong> in iPad Safari &rarr; <strong>Share &rarr; Add to Home Screen</strong> for full-screen offline play anywhere.</p>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
   <script>
     function copyText(id, btn) {
       navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => {
         const old = btn.textContent;
-        btn.textContent = 'COPIED!';
+        btn.textContent = 'Copied!';
         setTimeout(() => { btn.textContent = old; }, 1600);
       });
     }

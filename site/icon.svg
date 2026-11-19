@@ -1,6 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <rect width="128" height="128" rx="28" fill="#F6C945"/>
-  <rect x="14" y="34" width="100" height="72" rx="14" fill="#1546F6" stroke="#1C1E21" stroke-width="5"/>
-  <text x="64" y="86" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="48" fill="#F7F5EE" letter-spacing="-2">KC</text>
-  <polygon points="44,34 52,12 64,26 76,12 84,34" fill="#F6C945" stroke="#1C1E21" stroke-width="4.5" stroke-linejoin="round"/>
+  <rect width="128" height="128" rx="30" fill="#F5C84C"/>
+  <!-- Soft cardboard crown -->
+  <polygon points="36,46 44,20 64,36 84,20 92,46" fill="#B58A5B" stroke="#7A5A37" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Matte polymer clay dino head silhouette -->
+  <rect x="28" y="42" width="72" height="58" rx="28" fill="#5F8D73"/>
+  <circle cx="76" cy="64" r="10" fill="#FAF6EB"/>
+  <circle cx="78" cy="64" r="5" fill="#2E2925"/>
+  <!-- Cobalt tie -->
+  <polygon points="56,100 72,100 76,120 64,126 52,120" fill="#2A5CA8"/>
+  <rect x="40" y="96" width="48" height="9" rx="4.5" fill="#F5C84C"/>
 </svg>

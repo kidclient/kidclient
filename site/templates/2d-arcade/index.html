@@ -6,13 +6,13 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet" />
-  <title>Brief #02: Clay Dino Star Bounce | KidClient</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap" rel="stylesheet" />
+  <title>Path B: Clay Dino Star Bounce | KidClient Toybox</title>
   <style>
     * { box-sizing: border-box; }
     html, body {
       margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
-      background: #F7F5EE; font-family: 'Space Grotesk', system-ui, sans-serif;
+      background: #FCF8EB; font-family: 'Fredoka', system-ui, sans-serif;
       touch-action: none; user-select: none; -webkit-user-select: none; overscroll-behavior: none;
     }
     canvas { display: block; width: 100%; height: 100%; }
@@ -23,66 +23,68 @@
     }
     .pill {
       pointer-events: auto;
-      background: #F7F5EE; color: #1C1E21;
-      padding: 7px 15px; border-radius: 14px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 16px; font-weight: 800;
-      border: 2.5px solid #1C1E21;
+      background: #FFFDF6; color: #3B3026;
+      padding: 8px 16px; border-radius: 20px;
+      font-size: 18px; font-weight: 700;
       text-decoration: none; display: flex; align-items: center; gap: 9px;
-      box-shadow: 4px 4px 0 #1C1E21;
+      box-shadow: 0 5px 0 #DFD2B8, 0 8px 18px rgba(74, 56, 38, 0.14);
     }
-    .pill img { width: 32px; height: 32px; border-radius: 8px; border: 2px solid #1C1E21; object-fit: cover; }
+    .pill img { width: 32px; height: 32px; border-radius: 10px; object-fit: cover; }
     #controls {
       position: fixed; bottom: 24px; left: 24px; right: 24px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 20; pointer-events: none;
     }
-    .btn-group { display: flex; gap: 14px; align-items: center; pointer-events: auto; }
+    .btn-tray {
+      display: flex; gap: 14px; align-items: center; pointer-events: auto;
+      background: #F5C84C; padding: 12px 16px; border-radius: 28px;
+      box-shadow: 0 8px 0 #D2A024, 0 14px 26px rgba(74, 56, 38, 0.22);
+    }
     .touch-btn {
-      width: 88px; height: 88px; border-radius: 22px;
-      font-size: 32px; border: 3.5px solid #1C1E21;
-      background: #F6C945; color: #1C1E21;
+      width: 82px; height: 82px; border-radius: 50%; border: none;
+      font-size: 30px; background: #FFFDF6; color: #3B3026;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 6px 0 #1C1E21; cursor: pointer;
-      font-family: 'JetBrains Mono', monospace; font-weight: 800;
+      box-shadow: 0 6px 0 #DFD2B8; cursor: pointer;
+      font-family: 'Fredoka', sans-serif; font-weight: 700;
       transition: transform 0.08s, box-shadow 0.08s;
     }
-    .touch-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #1C1E21; }
+    .touch-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #DFD2B8; }
     .jump-btn {
-      border-radius: 50%; background: #2E8B57; color: #fff;
-      font-size: 13px; flex-direction: column;
+      background: #3D7A52; color: #FFFDF6; box-shadow: 0 6px 0 #29593A;
+      font-size: 14px; flex-direction: column;
     }
+    .jump-btn:active { box-shadow: 0 2px 0 #29593A; }
     .silly-btn {
-      width: 98px; height: 98px; border-radius: 50%;
-      background: #F02D2D; color: #fff;
-      font-size: 13px; flex-direction: column; line-height: 1.05;
+      width: 90px; height: 90px; background: #E05A47; color: #FFFDF6;
+      box-shadow: 0 6px 0 #B94232; font-size: 14px; flex-direction: column; line-height: 1.05;
     }
+    .silly-btn:active { box-shadow: 0 2px 0 #B94232; }
   </style>
 </head>
 <body>
   <div id="hud">
     <a href="/" class="pill">
       <img src="/assets/brand/clay-dino-avatar.jpg" alt="KidClient" />
-      <span>ARCADE</span>
+      <span>Toybox Home</span>
     </a>
-    <div class="pill">★ <span id="score">0</span> &nbsp;|&nbsp; BEST <span id="best">0</span></div>
+    <div class="pill">★ <span id="score">0</span> &nbsp;|&nbsp; Best <span id="best">0</span></div>
   </div>
 
   <canvas id="game"></canvas>
 
   <div id="controls">
-    <div class="btn-group">
+    <div class="btn-tray">
       <button class="touch-btn" id="btn-left">◀</button>
       <button class="touch-btn" id="btn-right">▶</button>
     </div>
-    <div class="btn-group">
+    <div class="btn-tray">
       <button class="touch-btn silly-btn" id="btn-silly">
-        <span style="font-size:26px">👑</span>
-        SILLY<br/>HAT
+        <span style="font-size:24px">👑</span>
+        Hat!
       </button>
       <button class="touch-btn jump-btn" id="btn-jump">
-        <span style="font-size:26px">🚀</span>
-        JUMP
+        <span style="font-size:24px">🚀</span>
+        Jump!
       </button>
     </div>
   </div>
@@ -112,11 +114,11 @@
     let hatIdx = 0;
     const player = { x: W / 2, y: H - 220, vx: 0, vy: 0, radius: 52 };
 
-    // Tactile Swiss/Toybox Jump Pads
+    // Tactile Painted Wooden Blocks (Direction 1 Palette)
     const pads = [
-      { x: 0.22, y: 0.66, w: 155, color: '#1546F6' },
-      { x: 0.5, y: 0.48, w: 170, color: '#E55B4B' },
-      { x: 0.78, y: 0.66, w: 155, color: '#F6C945' }
+      { x: 0.22, y: 0.66, w: 160, color: '#2A5CA8', deep: '#1E447E' },
+      { x: 0.5, y: 0.48, w: 175, color: '#E05A47', deep: '#B94232' },
+      { x: 0.78, y: 0.66, w: 160, color: '#F5C84C', deep: '#D2A024' }
     ];
 
     const stars = [];
@@ -131,7 +133,7 @@
     }
     for (let i = 0; i < 7; i++) spawnStar();
 
-    function burst(x, y, emoji = '★') {
+    function burst(x, y, emoji = '✨') {
       for (let i = 0; i < 12; i++) {
         const angle = (Math.PI * 2 * i) / 12;
         const speed = 3 + Math.random() * 5.5;
@@ -182,33 +184,33 @@
       requestAnimationFrame(loop);
       t += 0.06;
 
-      // Warm Swiss Graph Paper Canvas (Hybrid Dir 1 + Dir 2!)
-      ctx.fillStyle = '#F7F5EE';
+      // Warm Cream Studio Paper Backdrop
+      const bg = ctx.createLinearGradient(0, 0, 0, H);
+      bg.addColorStop(0, '#FCF8EB');
+      bg.addColorStop(1, '#F2E8D2');
+      ctx.fillStyle = bg;
       ctx.fillRect(0, 0, W, H);
-      ctx.strokeStyle = 'rgba(28, 30, 33, 0.08)';
-      ctx.lineWidth = 1;
-      for (let x = 0; x < W; x += 32) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
-      }
-      for (let y = 0; y < H; y += 32) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-      }
 
-      // Faint Agency Watermark
-      ctx.fillStyle = 'rgba(28, 30, 33, 0.06)';
-      ctx.font = '800 52px "Space Grotesk", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('BRIEF #02 // CLAY DINO BOUNCE', W / 2, 130);
+      // Soft decorative clay clouds
+      ctx.fillStyle = 'rgba(255, 253, 246, 0.85)';
+      [0.2, 0.55, 0.85].forEach((cx, i) => {
+        const x = ((cx * W + t * (4 + i * 2)) % (W + 160)) - 80;
+        const y = 120 + i * 48;
+        ctx.beginPath();
+        ctx.arc(x, y, 36, 0, Math.PI * 2);
+        ctx.arc(x + 30, y - 10, 42, 0, Math.PI * 2);
+        ctx.arc(x + 62, y, 32, 0, Math.PI * 2);
+        ctx.fill();
+      });
 
-      // Draw Tactile Wooden Jump Pads with Hard Ink Shadow
+      // Tactile Painted Wooden Jump Blocks
       pads.forEach((p) => {
         const px = p.x * W;
         const py = p.y * H;
-        ctx.fillStyle = '#1C1E21';
-        ctx.beginPath(); ctx.roundRect(px - p.w / 2 + 5, py + 5, p.w, 24, 10); ctx.fill();
+        ctx.fillStyle = p.deep;
+        ctx.beginPath(); ctx.roundRect(px - p.w / 2, py + 7, p.w, 26, 14); ctx.fill();
         ctx.fillStyle = p.color;
-        ctx.beginPath(); ctx.roundRect(px - p.w / 2, py, p.w, 24, 10); ctx.fill();
-        ctx.strokeStyle = '#1C1E21'; ctx.lineWidth = 3; ctx.stroke();
+        ctx.beginPath(); ctx.roundRect(px - p.w / 2, py, p.w, 26, 14); ctx.fill();
 
         if (
           player.vy > 0 &&
@@ -223,12 +225,12 @@
         }
       });
 
-      // Warm Forest Green Felt Floor with Bold Ink Border
+      // Warm Forest-Green Felt Floor
       const groundY = H - 86;
-      ctx.fillStyle = '#5ea373';
+      ctx.fillStyle = '#5c946e';
       ctx.fillRect(0, groundY, W, 86);
-      ctx.fillStyle = '#1C1E21';
-      ctx.fillRect(0, groundY, W, 4);
+      ctx.fillStyle = '#3D7A52';
+      ctx.fillRect(0, groundY, W, 12);
 
       if (input.left) player.vx = -9;
       else if (input.right) player.vx = 9;
@@ -245,7 +247,7 @@
         player.vy = 0;
       }
 
-      // Gold Foil Star Stickers
+      // Sunshine Stars
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       for (let i = stars.length - 1; i >= 0; i--) {
@@ -270,30 +272,31 @@
         }
       }
 
-      // Playable Clay Dino Sticker Token with Hard Shadow
+      // Soft-shadowed Clay Dino Portrait Token
       ctx.save();
       ctx.translate(player.x, player.y);
       ctx.rotate(player.vx * 0.025);
-      ctx.beginPath();
-      ctx.arc(5, 5, player.radius, 0, Math.PI * 2);
-      ctx.fillStyle = '#1C1E21';
-      ctx.fill();
-
+      ctx.shadowColor = 'rgba(74, 56, 38, 0.28)';
+      ctx.shadowBlur = 16;
+      ctx.shadowOffsetY = 8;
       ctx.beginPath();
       ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#FFFDF6';
+      ctx.fill();
+      ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+
+      ctx.beginPath();
+      ctx.arc(0, 0, player.radius - 4, 0, Math.PI * 2);
       ctx.closePath();
       ctx.save();
       ctx.clip();
       if (mascotImg.complete && mascotImg.naturalWidth > 0) {
         ctx.drawImage(mascotImg, -player.radius, -player.radius, player.radius * 2, player.radius * 2);
       } else {
-        ctx.fillStyle = '#F6C945';
+        ctx.fillStyle = '#F5C84C';
         ctx.fill();
       }
       ctx.restore();
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = '#1C1E21';
-      ctx.stroke();
 
       if (hats[hatIdx]) {
         ctx.font = '44px serif';

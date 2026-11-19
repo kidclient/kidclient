@@ -1,12 +1,12 @@
 {
-  "name": "KidClient — Parent Consultant + 4yo Creative Director",
+  "name": "KidClient — Tactile Toybox AI Game Studio",
   "short_name": "KidClient",
-  "description": "Playable tactile tablet games, printable client briefs, and AI guides built with a 4-year-old.",
+  "description": "Playable clay & toybox games, parent guides, and AI prompts built with a 4-year-old Creative Director.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "landscape",
-  "background_color": "#F7F5EE",
-  "theme_color": "#F6C945",
+  "background_color": "#FAF6E8",
+  "theme_color": "#F5C84C",
   "icons": [
     {
       "src": "/icon-192.png",

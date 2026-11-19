@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kidclient-arcade-v4';
+const CACHE_NAME = 'kidclient-arcade-v5';
 const CORE_ASSETS = [
   '/',
   '/manifest.json',
@@ -8,10 +8,10 @@ const CORE_ASSETS = [
   '/icon-512.png',
   '/apple-touch-icon.png',
   '/assets/brand/clay-dino-avatar.jpg',
-  '/assets/brand/agency-brief-board.jpg',
   '/assets/brand/toybox-board.jpg',
-  '/assets/brand/crayon-shark-truck.jpg',
-  '/assets/brand/clay-studio-desk.jpg',
+  '/assets/brand/clay-truck-sketch.jpg',
+  '/assets/brand/toybox-controller.jpg',
+  '/assets/brand/dino-approved-stamp.jpg',
   '/shared/kidclient-shell.js',
   '/templates/3d-threejs/',
   '/templates/2d-arcade/',
